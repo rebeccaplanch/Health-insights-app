@@ -35,8 +35,13 @@ export async function GET(request: NextRequest) {
     );
   } catch (error) {
     console.error('Error in Strava callback:', error);
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    });
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/?error=strava_auth_failed`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/?error=strava_auth_failed&details=${encodeURIComponent(error instanceof Error ? error.message : 'Unknown error')}`
     );
   }
 }
