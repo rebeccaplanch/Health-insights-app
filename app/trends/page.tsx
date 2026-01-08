@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 import { formatDateForDisplay } from '@/lib/utils';
 
 interface DailyData {
@@ -61,8 +61,15 @@ export default function TrendsPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen p-4 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="text-center pt-4 pb-2">
+          <h1 className="text-3xl font-bold mb-2">Health Tracker</h1>
+          <p className="text-gray-600 dark:text-gray-400">Your personal health & performance tracker</p>
+        </div>
+
+        <Navigation />
+
+        <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-center p-8">
             <div className="text-gray-500">Loading trends...</div>
           </div>
@@ -95,15 +102,19 @@ export default function TrendsPage() {
   const COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4'];
 
   return (
-    <main className="min-h-screen p-4 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto space-y-6 pb-8">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="text-center pt-4 pb-2">
+        <h1 className="text-3xl font-bold mb-2">Health Tracker</h1>
+        <p className="text-gray-600 dark:text-gray-400">Your personal health & performance tracker</p>
+      </div>
+
+      <Navigation />
+
+      <div className="max-w-6xl mx-auto px-4 space-y-6 pb-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <Link href="/" className="text-blue-600 dark:text-blue-400 text-sm mb-2 block">
-              ← Back to Dashboard
-            </Link>
-            <h1 className="text-3xl font-bold">Trends & Insights</h1>
+            <h2 className="text-2xl font-bold">Trends & Insights</h2>
           </div>
 
           {/* Period selector */}
