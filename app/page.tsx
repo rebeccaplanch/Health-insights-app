@@ -1,5 +1,6 @@
 import DailyCheckin from '@/components/DailyCheckin';
 import Dashboard from '@/components/Dashboard';
+import StravaConnect from '@/components/StravaConnect';
 
 export default function Home() {
   return (
@@ -13,6 +14,8 @@ export default function Home() {
         <Dashboard />
 
         <DailyCheckin />
+
+        <StravaConnect />
       </div>
     </main>
   );
