@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Daily entry model - one record per day
+// Stores manual input (steps, calories) and computed scores (strain, readiness, insights)
+model DailyEntry {
+  id        Int      @id @default(autoincrement())
+  date      String   @unique // YYYY-MM-DD format
+
+  // Manual inputs
+  steps           Int?
+  caloriesBurned  Int?
+
+  // Computed scores
+  strain          Float?   // 0-21 scale
+  readiness       String?  // "green" | "yellow" | "red"
+  insights        String?  // JSON array of insight objects
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workouts  Workout[]
+}
+
+// Strava OAuth credentials (single-user app, only one record)
+model StravaAuth {
+  id           Int      @id @default(autoincrement())
+  accessToken  String
+  refreshToken String
+  expiresAt    Int      // Unix timestamp
+
+  // Sync tracking
+  lastSync     DateTime?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Workout/Activity from Strava
+model Workout {
+  id                   Int      @id @default(autoincrement())
+  providerActivityId   String   @unique // Strava activity ID
+
+  // Date association
+  date                 String   // YYYY-MM-DD - for grouping by day
+  startDateLocal       DateTime // Full datetime with timezone info
+
+  // Activity details
+  type                 String   // Run, Ride, Swim, etc.
+  name                 String
+  duration             Int      // seconds
+  distance             Float?   // meters
+  elevation            Float?   // meters
+  averageHeartrate     Float?   // bpm
+
+  // Raw data (for future use)
+  rawData              String?  // JSON blob of full Strava activity
+
+  // Relations
+  dailyEntryId         Int?
+  dailyEntry           DailyEntry? @relation(fields: [dailyEntryId], references: [id])
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([date])
+}
