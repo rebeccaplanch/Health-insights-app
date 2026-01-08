@@ -55,9 +55,31 @@ export default function Dashboard() {
             workoutCount: 0,
           });
         }
+      } else {
+        // Set default data on error
+        setData({
+          date: today,
+          steps: null,
+          caloriesBurned: null,
+          strain: null,
+          readiness: null,
+          insights: [],
+          workoutCount: 0,
+        });
       }
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      // Set default data on error
+      const today = getTodayDate();
+      setData({
+        date: today,
+        steps: null,
+        caloriesBurned: null,
+        strain: null,
+        readiness: null,
+        insights: [],
+        workoutCount: 0,
+      });
     } finally {
       setLoading(false);
     }

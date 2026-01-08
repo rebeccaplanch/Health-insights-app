@@ -23,9 +23,14 @@ export default function StravaConnect() {
       if (response.ok) {
         const data = await response.json();
         setStatus(data);
+      } else {
+        // Set default disconnected state on error
+        setStatus({ connected: false });
       }
     } catch (error) {
       console.error('Error fetching sync status:', error);
+      // Set default disconnected state on error
+      setStatus({ connected: false });
     }
   };
 
