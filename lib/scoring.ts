@@ -42,7 +42,7 @@ const SPORT_MULTIPLIERS: Record<string, number> = {
   Hike: 70,
   WeightTraining: 90,
   Yoga: 30,
-  Workout: 80, // Generic workout
+  Workout: 100, // CrossFit / Hybrid training / Strength training
   // Add more as needed
 };
 
@@ -231,13 +231,33 @@ export function generateInsights(
 
   // Insight 2: Workout-specific (what you did yesterday)
   if (workouts.length > 0) {
-    const totalDuration = workouts.reduce((sum, w) => sum + w.duration, 0);
-    const durationMins = Math.round(totalDuration / 60);
-    const types = [...new Set(workouts.map(w => w.type))];
+    // Show details for each workout
+    workouts.forEach(workout => {
+      const durationMins = Math.round(workout.duration / 60);
+      const workoutType = workout.type === 'Workout' ? 'CrossFit/Hybrid training' : workout.type;
 
-    insights.push({
-      type: 'workouts',
-      message: `${durationMins} minutes of activity yesterday: ${types.join(', ')}`
+      let details = `${workoutType}: ${durationMins} min`;
+
+      // Add heart rate if available
+      if (workout.averageHeartrate) {
+        details += `, ${workout.averageHeartrate} bpm avg HR`;
+      }
+
+      // Add distance if available (for runs/rides)
+      if (workout.distance && workout.distance > 0) {
+        const km = (workout.distance / 1000).toFixed(1);
+        details += `, ${km} km`;
+      }
+
+      // Add elevation if significant
+      if (workout.elevation && workout.elevation > 50) {
+        details += `, ${workout.elevation}m elevation`;
+      }
+
+      insights.push({
+        type: 'workouts',
+        message: details
+      });
     });
   }
 
