@@ -2,7 +2,6 @@ import DailyCheckin from '@/components/DailyCheckin';
 import Dashboard from '@/components/Dashboard';
 import StravaConnect from '@/components/StravaConnect';
 import Navigation from '@/components/Navigation';
-import AICoach from '@/components/AICoach';
 
 export default function Home() {
   return (
@@ -20,8 +19,6 @@ export default function Home() {
 
       <div className="max-w-2xl mx-auto px-4 space-y-4 pb-8">
         <Dashboard />
-
-        <AICoach />
 
         <DailyCheckin />
 
