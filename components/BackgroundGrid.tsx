@@ -6,26 +6,35 @@ export default function BackgroundGrid() {
   // Generate random spots for grid visibility on mount
   const spots = useMemo(() => {
     const numSpots = 8;
-    const spotRadius = 56;
 
     return Array.from({ length: numSpots }, () => {
-      const x = Math.random() * 100; // Percentage
-      const y = Math.random() * 100; // Percentage
-      const radius = spotRadius + (Math.random() * 30 - 15);
+      const x = 10 + Math.random() * 80; // Keep away from edges (10-90%)
+      const y = 10 + Math.random() * 80;
+      const radius = 80 + Math.random() * 40; // 80-120px radius
 
-      // Generate 3-7 filled boxes per spot
-      const numFilledBoxes = Math.floor(Math.random() * 5) + 3;
+      // Generate 4-8 filled boxes per spot
+      const numFilledBoxes = Math.floor(Math.random() * 5) + 4;
       const filledBoxes = Array.from({ length: numFilledBoxes }, () => {
         const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * 0.7; // 70% of radius
-        const boxX = x + Math.cos(angle) * distance * (radius / 10);
-        const boxY = y + Math.sin(angle) * distance * (radius / 10);
+        const distance = Math.random() * 60; // 0-60px from center
 
-        return {
-          x: Math.floor(boxX / 2.4) * 2.4, // Snap to grid (24px = ~2.4vw at 1000px width)
-          y: Math.floor(boxY / 2.4) * 2.4,
-          opacity: 0.08 + Math.random() * 0.04, // 0.08-0.12 opacity
-        };
+        // Calculate position in pixels
+        const boxX = (x * window.innerWidth / 100) + Math.cos(angle) * distance;
+        const boxY = (y * window.innerHeight / 100) + Math.sin(angle) * distance;
+
+        // Snap to 24px grid
+        const gridX = Math.floor(boxX / 24) * 24;
+        const gridY = Math.floor(boxY / 24) * 24;
+
+        // Calculate distance from spot center for opacity
+        const centerX = x * window.innerWidth / 100;
+        const centerY = y * window.innerHeight / 100;
+        const distFromCenter = Math.sqrt(
+          Math.pow(gridX - centerX, 2) + Math.pow(gridY - centerY, 2)
+        );
+        const opacity = Math.max(0.03, 0.15 - (distFromCenter / 100) * 0.12);
+
+        return { x: gridX, y: gridY, opacity };
       });
 
       return { x, y, radius, filledBoxes };
@@ -71,28 +80,10 @@ export default function BackgroundGrid() {
             <path
               d="M 24 0 L 0 0 0 24"
               fill="none"
-              stroke="rgba(255, 255, 255, 0.03)"
+              stroke="rgba(255, 255, 255, 0.025)"
               strokeWidth="1"
             />
           </pattern>
-
-          {/* Enhanced grid patterns for each spot */}
-          {spots.map((spot, index) => (
-            <pattern
-              key={`enhanced-grid-${index}`}
-              id={`enhanced-grid-${index}`}
-              width="24"
-              height="24"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 24 0 L 0 0 0 24"
-                fill="none"
-                stroke="rgba(255, 255, 255, 0.12)"
-                strokeWidth="1"
-              />
-            </pattern>
-          ))}
 
           {/* Radial gradient masks for each spotlight */}
           {spots.map((spot, index) => (
@@ -101,23 +92,13 @@ export default function BackgroundGrid() {
               id={`spot-gradient-${index}`}
               cx={`${spot.x}%`}
               cy={`${spot.y}%`}
-              r={`${spot.radius * 1.5}px`}
+              r={`${spot.radius}px`}
+              gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0%" stopColor="white" stopOpacity="1" />
-              <stop offset="70%" stopColor="white" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="white" stopOpacity="0" />
+              <stop offset="0%" stopColor="rgba(255, 255, 255, 0.12)" />
+              <stop offset="60%" stopColor="rgba(255, 255, 255, 0.06)" />
+              <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
             </radialGradient>
-          ))}
-
-          {/* Create masks for enhanced grid visibility */}
-          {spots.map((spot, index) => (
-            <mask key={`spot-mask-${index}`} id={`spot-mask-${index}`}>
-              <rect
-                width="100%"
-                height="100%"
-                fill={`url(#spot-gradient-${index})`}
-              />
-            </mask>
           ))}
         </defs>
 
@@ -127,21 +108,23 @@ export default function BackgroundGrid() {
         {/* Enhanced grid layers for each spot */}
         {spots.map((spot, index) => (
           <g key={`spot-${index}`}>
-            {/* Enhanced grid in spotlight area */}
+            {/* Enhanced grid circle overlay */}
             <circle
               cx={`${spot.x}%`}
               cy={`${spot.y}%`}
-              r={`${spot.radius}px`}
-              fill={`url(#enhanced-grid-${index})`}
-              mask={`url(#spot-mask-${index})`}
+              r={spot.radius}
+              fill="none"
+              stroke={`url(#spot-gradient-${index})`}
+              strokeWidth={spot.radius * 2}
+              opacity="0.8"
             />
 
             {/* Filled boxes within this spot */}
             {spot.filledBoxes.map((box, boxIndex) => (
               <rect
                 key={`box-${index}-${boxIndex}`}
-                x={`${box.x}%`}
-                y={`${box.y}%`}
+                x={box.x}
+                y={box.y}
                 width="24"
                 height="24"
                 fill={`rgba(255, 255, 255, ${box.opacity})`}
