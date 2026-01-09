@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getTodayDate, formatDateForDisplay } from '@/lib/utils';
+import { getYesterdayDate, formatDateForDisplay } from '@/lib/utils';
 
 export default function DailyCheckin() {
   const [date, setDate] = useState('');
@@ -11,15 +11,15 @@ export default function DailyCheckin() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // Set today's date on the client side
-    const today = getTodayDate();
-    setDate(today);
+    // Set yesterday's date on the client side (logging completed data)
+    const yesterday = getYesterdayDate();
+    setDate(yesterday);
 
-    // Fetch existing data for today
-    fetchTodayData(today);
+    // Fetch existing data for yesterday
+    fetchDateData(yesterday);
   }, []);
 
-  const fetchTodayData = async (dateStr: string) => {
+  const fetchDateData = async (dateStr: string) => {
     try {
       const response = await fetch(`/api/daily?date=${dateStr}`);
       if (response.ok) {
@@ -30,7 +30,7 @@ export default function DailyCheckin() {
         }
       }
     } catch (error) {
-      console.error('Error fetching today\'s data:', error);
+      console.error('Error fetching date data:', error);
     }
   };
 
@@ -72,7 +72,7 @@ export default function DailyCheckin() {
         <h2 className="text-2xl font-bold">Daily Check-in</h2>
         {date && (
           <p className="text-gray-600 dark:text-gray-400">
-            Today · {formatDateForDisplay(date)}
+            Yesterday · {formatDateForDisplay(date)}
           </p>
         )}
       </div>

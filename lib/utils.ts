@@ -11,6 +11,19 @@ export function getTodayDate(): string {
 }
 
 /**
+ * Get yesterday's date in YYYY-MM-DD format (client-side)
+ * Uses the browser's local timezone
+ */
+export function getYesterdayDate(): string {
+  const now = new Date();
+  now.setDate(now.getDate() - 1);
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/**
  * Format a date string to a human-readable format
  * Example: "2024-09-10" -> "Tue Sep 10"
  */

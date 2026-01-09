@@ -27,8 +27,8 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const today = getTodayDate();
-      const response = await fetch(`/api/daily?date=${today}`);
+      // Fetch the most recent entry with complete data
+      const response = await fetch('/api/daily/latest');
 
       if (response.ok) {
         const entry = await response.json();
@@ -44,7 +44,8 @@ export default function Dashboard() {
             workoutCount: entry.workouts?.length || 0,
           });
         } else {
-          // No entry for today yet
+          // No entries with data yet
+          const today = getTodayDate();
           setData({
             date: today,
             steps: null,
@@ -57,6 +58,7 @@ export default function Dashboard() {
         }
       } else {
         // Set default data on error
+        const today = getTodayDate();
         setData({
           date: today,
           steps: null,
@@ -114,7 +116,7 @@ export default function Dashboard() {
       {/* Header */}
       <div className="text-center">
         <h2 className="text-xl font-semibold">
-          Today · {formatDateForDisplay(data.date)}
+          {formatDateForDisplay(data.date)}
         </h2>
       </div>
 
