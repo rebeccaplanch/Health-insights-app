@@ -1,6 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
+// Handle OPTIONS request for CORS preflight
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 200, headers: corsHeaders });
+}
+
 /**
  * GET /api/ai/summary-data
  * Returns aggregated training data for AI analysis
@@ -8,17 +20,6 @@ import { prisma } from '@/lib/prisma';
  *   - days: number of days to fetch (default: 14)
  */
 export async function GET(request: Request) {
-  // Add CORS headers to allow Claude Code to fetch this data
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
-
-  // Handle preflight request
-  if (request.method === 'OPTIONS') {
-    return new NextResponse(null, { status: 200, headers });
-  }
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '14');
@@ -51,7 +52,7 @@ export async function GET(request: Request) {
       return NextResponse.json({
         message: 'No data available yet',
         entries: [],
-      }, { headers });
+      }, { headers: corsHeaders });
     }
 
     // Calculate aggregates
@@ -108,12 +109,12 @@ export async function GET(request: Request) {
         workoutTypes,
       },
       dailyData,
-    }, { headers });
+    }, { headers: corsHeaders });
   } catch (error) {
     console.error('Error fetching summary data:', error);
     return NextResponse.json(
       { error: 'Failed to fetch summary data' },
-      { status: 500, headers }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
