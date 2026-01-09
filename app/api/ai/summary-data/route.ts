@@ -8,6 +8,17 @@ import { prisma } from '@/lib/prisma';
  *   - days: number of days to fetch (default: 14)
  */
 export async function GET(request: Request) {
+  // Add CORS headers to allow Claude Code to fetch this data
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  // Handle preflight request
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, { status: 200, headers });
+  }
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '14');
@@ -40,7 +51,7 @@ export async function GET(request: Request) {
       return NextResponse.json({
         message: 'No data available yet',
         entries: [],
-      });
+      }, { headers });
     }
 
     // Calculate aggregates
@@ -97,12 +108,12 @@ export async function GET(request: Request) {
         workoutTypes,
       },
       dailyData,
-    });
+    }, { headers });
   } catch (error) {
     console.error('Error fetching summary data:', error);
     return NextResponse.json(
       { error: 'Failed to fetch summary data' },
-      { status: 500 }
+      { status: 500, headers }
     );
   }
 }
