@@ -19,6 +19,7 @@ model DailyEntry {
   // Manual inputs
   steps           Int?
   caloriesBurned  Int?
+  sleepScore      Int?     // Garmin sleep score (0-100)
 
   // Computed scores
   strain          Float?   // 0-21 scale

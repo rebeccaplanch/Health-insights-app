@@ -85,7 +85,8 @@ export async function POST(request: NextRequest) {
       workouts,
       yesterdayEntry?.strain || null,
       sevenDayStrains,
-      sevenDayCalories
+      sevenDayCalories,
+      todayEntry.sleepScore
     );
 
     // Update the entry with computed scores

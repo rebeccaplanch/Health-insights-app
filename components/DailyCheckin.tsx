@@ -7,6 +7,7 @@ export default function DailyCheckin() {
   const [date, setDate] = useState('');
   const [steps, setSteps] = useState('');
   const [caloriesBurned, setCaloriesBurned] = useState('');
+  const [sleepScore, setSleepScore] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -27,6 +28,7 @@ export default function DailyCheckin() {
         if (data) {
           setSteps(data.steps?.toString() || '');
           setCaloriesBurned(data.caloriesBurned?.toString() || '');
+          setSleepScore(data.sleepScore?.toString() || '');
         }
       }
     } catch (error) {
@@ -49,6 +51,7 @@ export default function DailyCheckin() {
           date,
           steps: steps ? parseInt(steps) : null,
           caloriesBurned: caloriesBurned ? parseInt(caloriesBurned) : null,
+          sleepScore: sleepScore ? parseInt(sleepScore) : null,
         }),
       });
 
@@ -106,6 +109,25 @@ export default function DailyCheckin() {
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700"
             min="0"
           />
+        </div>
+
+        <div>
+          <label htmlFor="sleepScore" className="block text-sm font-medium mb-2">
+            Sleep Score (Garmin)
+          </label>
+          <input
+            type="number"
+            id="sleepScore"
+            value={sleepScore}
+            onChange={(e) => setSleepScore(e.target.value)}
+            placeholder="75"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700"
+            min="0"
+            max="100"
+          />
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            0-100 scale from your Garmin device
+          </p>
         </div>
 
         <button

@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { date, steps, caloriesBurned } = body;
+    const { date, steps, caloriesBurned, sleepScore } = body;
 
     if (!date) {
       return NextResponse.json(
@@ -48,12 +48,14 @@ export async function POST(request: NextRequest) {
       update: {
         steps: steps !== undefined ? steps : undefined,
         caloriesBurned: caloriesBurned !== undefined ? caloriesBurned : undefined,
+        sleepScore: sleepScore !== undefined ? sleepScore : undefined,
         updatedAt: new Date(),
       },
       create: {
         date,
         steps,
         caloriesBurned,
+        sleepScore,
       },
     });
 

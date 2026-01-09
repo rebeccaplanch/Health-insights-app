@@ -118,13 +118,14 @@ export function calculateStrain(
 
 /**
  * Calculate readiness band
- * Based on yesterday's strain, rolling averages, and trends
+ * Based on yesterday's strain, rolling averages, trends, and sleep quality
  */
 export function calculateReadiness(
   yesterdayStrain: number | null,
   sevenDayStrains: number[], // Last 7 days of strain scores
   todayCalories: number | null,
-  sevenDayCalories: number[] // Last 7 days of calories
+  sevenDayCalories: number[], // Last 7 days of calories
+  sleepScore: number | null // Garmin sleep score (0-100)
 ): ReadinessBand {
   let score = 100; // Start at 100, deduct points for risk factors
 
@@ -168,6 +169,21 @@ export function calculateReadiness(
     }
   }
 
+  // Factor 5: Sleep quality (Garmin sleep score)
+  // Sleep is a critical recovery metric
+  if (sleepScore !== null) {
+    if (sleepScore >= 70) {
+      // Good sleep: boost readiness
+      score += 15;
+    } else if (sleepScore >= 50) {
+      // Fair sleep: neutral (no change)
+      score += 0;
+    } else {
+      // Poor sleep: significant penalty
+      score -= 25;
+    }
+  }
+
   // Map score to band
   if (score >= 67) {
     return 'green';
@@ -187,7 +203,8 @@ export function generateInsights(
   steps: number | null,
   workouts: Workout[],
   yesterdayStrain: number | null,
-  sevenDayStrains: number[]
+  sevenDayStrains: number[],
+  sleepScore: number | null
 ): Insight[] {
   const insights: Insight[] = [];
 
@@ -241,7 +258,24 @@ export function generateInsights(
     }
   }
 
-  // Insight 4: Readiness-based advice
+  // Insight 4: Sleep quality
+  if (sleepScore !== null) {
+    if (sleepScore >= 70) {
+      insights.push({
+        type: 'recovery',
+        message: `Excellent sleep quality (${sleepScore}/100)`,
+        suggestion: 'Your body is well-recovered for training'
+      });
+    } else if (sleepScore < 50) {
+      insights.push({
+        type: 'recovery',
+        message: `Poor sleep quality (${sleepScore}/100) is impacting recovery`,
+        suggestion: 'Focus on sleep hygiene and consider a lighter training day'
+      });
+    }
+  }
+
+  // Insight 5: Readiness-based advice
   if (readiness === 'red') {
     insights.push({
       type: 'readiness',
@@ -278,14 +312,16 @@ export function calculateDailyScores(
   workouts: Workout[],
   yesterdayStrain: number | null,
   sevenDayStrains: number[],
-  sevenDayCalories: number[]
+  sevenDayCalories: number[],
+  sleepScore: number | null
 ): DailyScores {
   const strain = calculateStrain(steps, workouts);
   const readiness = calculateReadiness(
     yesterdayStrain,
     sevenDayStrains,
     caloriesBurned,
-    sevenDayCalories
+    sevenDayCalories,
+    sleepScore
   );
   const insights = generateInsights(
     strain,
@@ -293,7 +329,8 @@ export function calculateDailyScores(
     steps,
     workouts,
     yesterdayStrain,
-    sevenDayStrains
+    sevenDayStrains,
+    sleepScore
   );
 
   return {
