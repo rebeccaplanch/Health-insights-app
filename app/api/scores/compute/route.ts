@@ -72,6 +72,8 @@ export async function POST(request: NextRequest) {
     // Map workouts to scoring module format
     const workouts: Workout[] = todayEntry.workouts.map(w => ({
       type: w.type,
+      customType: w.customType,
+      description: w.description,
       duration: w.duration,
       distance: w.distance,
       elevation: w.elevation,

@@ -58,8 +58,10 @@ model Workout {
   startDateLocal       DateTime // Full datetime with timezone info
 
   // Activity details
-  type                 String   // Run, Ride, Swim, etc.
+  type                 String   // Run, Ride, Swim, etc. (original from Strava)
+  customType           String?  // User-edited workout type (overrides type)
   name                 String
+  description          String?  // User-added workout description/notes
   duration             Int      // seconds
   distance             Float?   // meters
   elevation            Float?   // meters

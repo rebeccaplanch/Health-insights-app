@@ -17,6 +17,8 @@ export interface Insight {
 
 export interface Workout {
   type: string;
+  customType?: string | null; // User-edited type (overrides type)
+  description?: string | null; // User-added notes
   duration: number; // seconds
   distance?: number | null; // meters
   elevation?: number | null; // meters
@@ -59,8 +61,11 @@ function calculateStepLoad(steps: number): number {
 function calculateWorkoutLoad(workout: Workout): number {
   const durationHours = workout.duration / 3600;
 
+  // Use customType if set, otherwise use original type
+  const workoutType = workout.customType || workout.type;
+
   // Get base multiplier for sport type
-  const sportMultiplier = SPORT_MULTIPLIERS[workout.type] || SPORT_MULTIPLIERS.Workout;
+  const sportMultiplier = SPORT_MULTIPLIERS[workoutType] || SPORT_MULTIPLIERS.Workout;
 
   // Base load from duration
   let load = durationHours * sportMultiplier;
@@ -234,7 +239,13 @@ export function generateInsights(
     // Show details for each workout
     workouts.forEach(workout => {
       const durationMins = Math.round(workout.duration / 60);
-      const workoutType = workout.type === 'Workout' ? 'CrossFit/Hybrid training' : workout.type;
+
+      // Use customType if set, otherwise use original type
+      let workoutType = workout.customType || workout.type;
+      // Display "CrossFit/Hybrid training" for generic "Workout" type if no custom type
+      if (!workout.customType && workout.type === 'Workout') {
+        workoutType = 'CrossFit/Hybrid training';
+      }
 
       let details = `${workoutType}: ${durationMins} min`;
 

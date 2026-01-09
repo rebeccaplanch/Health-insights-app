@@ -33,6 +33,17 @@ export default function Navigation() {
           </Link>
 
           <Link
+            href="/activities"
+            className={`py-4 px-2 border-b-2 font-semibold text-sm transition-colors ${
+              pathname === '/activities'
+                ? 'border-neon-green text-neon-green'
+                : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+            }`}
+          >
+            🏃 Activities
+          </Link>
+
+          <Link
             href="/ai-data"
             className={`py-4 px-2 border-b-2 font-semibold text-sm transition-colors ${
               pathname === '/ai-data'
