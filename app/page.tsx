@@ -6,15 +6,19 @@ import AICoach from '@/components/AICoach';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="text-center pt-4 pb-2">
-        <h1 className="text-3xl font-bold mb-2">Health Tracker</h1>
-        <p className="text-gray-600 dark:text-gray-400">Your personal health & performance tracker</p>
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="text-center pt-6 pb-4">
+        <h1 className="text-4xl font-bold mb-2 text-slate-900 dark:text-white tracking-tight">
+          Health Tracker
+        </h1>
+        <p className="text-slate-600 dark:text-slate-400 font-medium">
+          Your personal performance dashboard
+        </p>
       </div>
 
       <Navigation />
 
-      <div className="max-w-2xl mx-auto px-4 space-y-6 pb-8">
+      <div className="max-w-2xl mx-auto px-4 space-y-4 pb-8">
         <Dashboard />
 
         <AICoach />

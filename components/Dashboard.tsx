@@ -99,113 +99,147 @@ export default function Dashboard() {
     return null;
   }
 
-  const readinessColor = {
-    green: 'bg-green-500',
-    yellow: 'bg-yellow-500',
-    red: 'bg-red-500',
+  const readinessConfig = {
+    green: {
+      color: 'bg-neon-green',
+      textColor: 'text-neon-green',
+      label: 'Ready',
+    },
+    yellow: {
+      color: 'bg-yellow-400',
+      textColor: 'text-yellow-400',
+      label: 'Moderate',
+    },
+    red: {
+      color: 'bg-red-500',
+      textColor: 'text-red-500',
+      label: 'Rest Needed',
+    },
   }[data.readiness || 'green'];
 
-  const readinessTextColor = {
-    green: 'text-green-700 dark:text-green-400',
-    yellow: 'text-yellow-700 dark:text-yellow-400',
-    red: 'text-red-700 dark:text-red-400',
-  }[data.readiness || 'green'];
+  const strainPercentage = data.strain !== null ? (data.strain / 21) * 100 : 0;
+  const circumference = 2 * Math.PI * 90; // radius = 90
+  const strokeDashoffset = circumference - (circumference * strainPercentage) / 100;
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className="text-xl font-semibold">
-          {formatDateForDisplay(data.date)}
-        </h2>
+    <div className="space-y-4">
+      {/* Strain Circle - Hero Section */}
+      <div className="bg-slate-900 dark:bg-slate-800/50 rounded-3xl p-8 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-neon-green/5 rounded-full blur-3xl"></div>
+
+        <div className="flex flex-col items-center relative z-10">
+          <div className="text-sm font-medium text-slate-400 tracking-wide uppercase mb-6">
+            Current Strain
+          </div>
+
+          {/* Circular Progress */}
+          <div className="relative w-56 h-56">
+            <svg className="transform -rotate-90 w-full h-full">
+              {/* Background circle */}
+              <circle
+                cx="112"
+                cy="112"
+                r="90"
+                stroke="currentColor"
+                strokeWidth="12"
+                fill="none"
+                className="text-slate-700/50"
+              />
+              {/* Progress circle */}
+              <circle
+                cx="112"
+                cy="112"
+                r="90"
+                stroke="currentColor"
+                strokeWidth="12"
+                fill="none"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                className="text-neon-green transition-all duration-1000 ease-out"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            {/* Center text */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="text-6xl font-bold text-white tracking-tight">
+                {data.strain !== null ? data.strain.toFixed(1) : '–'}
+              </div>
+              <div className="text-lg text-slate-400 font-medium">/ 21</div>
+            </div>
+          </div>
+
+          <div className="mt-6 text-center">
+            <div className="text-xs text-slate-500 mb-2">
+              {formatDateForDisplay(data.date)}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Main Tiles Grid */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Strain Tile */}
-        <div className="col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-            Strain
-          </div>
-          <div className="flex items-baseline gap-2">
-            <div className="text-5xl font-bold">
-              {data.strain !== null ? data.strain.toFixed(1) : '–'}
+      {/* Readiness Band */}
+      <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-sm text-slate-500 dark:text-slate-400 mb-1 font-medium">
+              Readiness
             </div>
-            <div className="text-2xl text-gray-500 dark:text-gray-400">/ 21</div>
-          </div>
-          {data.strain !== null && (
-            <div className="mt-3 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div
-                className="bg-blue-600 h-2 rounded-full transition-all"
-                style={{ width: `${(data.strain / 21) * 100}%` }}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Readiness Tile */}
-        <div className="col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <div className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-            Readiness
-          </div>
-          {data.readiness ? (
-            <div className="flex items-center gap-3">
-              <div className={`${readinessColor} w-16 h-16 rounded-full`} />
-              <div>
-                <div className={`text-2xl font-bold capitalize ${readinessTextColor}`}>
-                  {data.readiness}
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  Estimated from activity patterns
-                </div>
+            {data.readiness ? (
+              <div className={`text-2xl font-bold ${readinessConfig.textColor}`}>
+                {readinessConfig.label}
               </div>
-            </div>
-          ) : (
-            <div className="text-gray-500 dark:text-gray-400">
-              No data yet
-            </div>
+            ) : (
+              <div className="text-slate-400">No data</div>
+            )}
+          </div>
+          {data.readiness && (
+            <div className={`${readinessConfig.color} w-16 h-16 rounded-full shadow-lg`} />
           )}
         </div>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-          <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">
             Steps
           </div>
-          <div className="text-xl font-semibold">
-            {data.steps !== null ? data.steps.toLocaleString() : '–'}
+          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+            {data.steps !== null ? Math.round(data.steps / 1000) + 'k' : '–'}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-          <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">
             Calories
           </div>
-          <div className="text-xl font-semibold">
-            {data.caloriesBurned !== null ? data.caloriesBurned.toLocaleString() : '–'}
+          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+            {data.caloriesBurned !== null ? Math.round(data.caloriesBurned / 100) / 10 + 'k' : '–'}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-          <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">
             Workouts
           </div>
-          <div className="text-xl font-semibold">{data.workoutCount}</div>
+          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+            {data.workoutCount}
+          </div>
         </div>
       </div>
 
       {/* Insights */}
       {data.insights && data.insights.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Insights</h3>
-          <div className="space-y-3">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Insights</h3>
+          <div className="space-y-4">
             {data.insights.map((insight, index) => (
-              <div key={index} className="border-l-4 border-blue-500 pl-4">
-                <p className="text-sm font-medium">{insight.message}</p>
+              <div key={index} className="border-l-4 border-neon-green pl-4 py-1">
+                <p className="text-sm font-medium text-slate-900 dark:text-white leading-relaxed">
+                  {insight.message}
+                </p>
                 {insight.suggestion && (
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
                     💡 {insight.suggestion}
                   </p>
                 )}
@@ -214,14 +248,6 @@ export default function Dashboard() {
           </div>
         </div>
       )}
-
-      {/* Disclaimer */}
-      <div className="text-xs text-center text-gray-500 dark:text-gray-400 px-4">
-        <p>
-          Note: Readiness is estimated from activity and energy patterns only.
-          This is not based on HRV or sleep data.
-        </p>
-      </div>
     </div>
   );
 }
