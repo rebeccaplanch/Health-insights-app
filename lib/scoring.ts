@@ -213,25 +213,36 @@ export function generateInsights(
 ): Insight[] {
   const insights: Insight[] = [];
 
-  // Insight 1: Strain commentary (yesterday's strain informs today's readiness)
-  if (strain > 15) {
-    insights.push({
-      type: 'strain',
-      message: `Yesterday was high strain (${strain}/21) - your body needs recovery today`,
-      suggestion: 'Focus on rest, easy movement, and active recovery'
-    });
-  } else if (strain > 10) {
-    insights.push({
-      type: 'strain',
-      message: `Moderate strain yesterday (${strain}/21) - solid training load`,
-      suggestion: 'Listen to your body for today\'s training intensity'
-    });
+  // Insight 1: Strain commentary based on yesterday's actual strain
+  if (yesterdayStrain !== null) {
+    if (yesterdayStrain > 15) {
+      insights.push({
+        type: 'strain',
+        message: `Yesterday's high strain (${yesterdayStrain.toFixed(1)}/21) means your body needs recovery`,
+        suggestion: 'Focus on rest, easy movement, and active recovery today'
+      });
+    } else if (yesterdayStrain > 10) {
+      insights.push({
+        type: 'strain',
+        message: `Moderate strain yesterday (${yesterdayStrain.toFixed(1)}/21) - solid training load`,
+        suggestion: 'Listen to your body for today\'s training intensity'
+      });
+    } else if (yesterdayStrain > 0) {
+      insights.push({
+        type: 'strain',
+        message: `Low strain yesterday (${yesterdayStrain.toFixed(1)}/21) - you recovered well`,
+        suggestion: 'Good opportunity for a challenging workout today'
+      });
+    }
   } else if (strain > 0) {
-    insights.push({
-      type: 'strain',
-      message: `Low strain yesterday (${strain}/21) - you have capacity for more`,
-      suggestion: 'Good opportunity for a challenging workout today'
-    });
+    // If no yesterday data, comment on current day's logged data
+    if (strain > 15) {
+      insights.push({
+        type: 'strain',
+        message: `High activity day (${strain.toFixed(1)}/21) - plan for recovery tomorrow`,
+        suggestion: 'Monitor how you feel and prioritize rest'
+      });
+    }
   }
 
   // Insight 2: Workout-specific (what you did yesterday)
