@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import "./globals.css";
+import BackgroundGrid from "@/components/BackgroundGrid";
 
 const ibmPlexSans = IBM_Plex_Sans({
   weight: ['400', '500', '600', '700'],
@@ -44,6 +45,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon.svg" />
       </head>
       <body className="antialiased font-sans">
+        <BackgroundGrid />
         {children}
       </body>
     </html>

@@ -61,17 +61,21 @@ export default function TrendsPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="text-center pt-4 pb-2">
-          <h1 className="text-3xl font-bold mb-2">Health Tracker</h1>
-          <p className="text-gray-600 dark:text-gray-400">Your personal health & performance tracker</p>
+      <main className="min-h-screen">
+        <div className="text-center pt-6 pb-4">
+          <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
+            Health Tracker
+          </h1>
+          <p className="text-slate-300 font-medium">
+            Your personal performance dashboard
+          </p>
         </div>
 
         <Navigation />
 
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-center p-8">
-            <div className="text-gray-500">Loading trends...</div>
+            <div className="text-slate-400">Loading trends...</div>
           </div>
         </div>
       </main>
@@ -102,10 +106,14 @@ export default function TrendsPage() {
   const COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4'];
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="text-center pt-4 pb-2">
-        <h1 className="text-3xl font-bold mb-2">Health Tracker</h1>
-        <p className="text-gray-600 dark:text-gray-400">Your personal health & performance tracker</p>
+    <main className="min-h-screen">
+      <div className="text-center pt-6 pb-4">
+        <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
+          Health Tracker
+        </h1>
+        <p className="text-slate-300 font-medium">
+          Your personal performance dashboard
+        </p>
       </div>
 
       <Navigation />
@@ -114,7 +122,7 @@ export default function TrendsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold">Trends & Insights</h2>
+            <h2 className="text-2xl font-bold text-white">Trends & Insights</h2>
           </div>
 
           {/* Period selector */}

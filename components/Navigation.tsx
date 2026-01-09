@@ -7,7 +7,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-sm mb-6 border-b border-slate-200 dark:border-slate-700">
+    <nav className="bg-white/5 backdrop-blur-md shadow-lg mb-6 border-b border-white/10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex space-x-8">
           <Link
@@ -15,7 +15,7 @@ export default function Navigation() {
             className={`py-4 px-2 border-b-2 font-semibold text-sm transition-colors ${
               pathname === '/'
                 ? 'border-neon-green text-neon-green'
-                : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'border-transparent text-slate-300 hover:text-white'
             }`}
           >
             Dashboard
@@ -26,7 +26,7 @@ export default function Navigation() {
             className={`py-4 px-2 border-b-2 font-semibold text-sm transition-colors ${
               pathname === '/trends'
                 ? 'border-neon-green text-neon-green'
-                : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'border-transparent text-slate-300 hover:text-white'
             }`}
           >
             📊 Trends
@@ -37,7 +37,7 @@ export default function Navigation() {
             className={`py-4 px-2 border-b-2 font-semibold text-sm transition-colors ${
               pathname === '/activities'
                 ? 'border-neon-green text-neon-green'
-                : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'border-transparent text-slate-300 hover:text-white'
             }`}
           >
             🏃 Activities
@@ -48,7 +48,7 @@ export default function Navigation() {
             className={`py-4 px-2 border-b-2 font-semibold text-sm transition-colors ${
               pathname === '/ai-data'
                 ? 'border-neon-green text-neon-green'
-                : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'border-transparent text-slate-300 hover:text-white'
             }`}
           >
             🤖 AI Data

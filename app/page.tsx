@@ -5,12 +5,12 @@ import Navigation from '@/components/Navigation';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <main className="min-h-screen">
       <div className="text-center pt-6 pb-4">
-        <h1 className="text-4xl font-bold mb-2 text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
           Health Tracker
         </h1>
-        <p className="text-slate-600 dark:text-slate-400 font-medium">
+        <p className="text-slate-300 font-medium">
           Your personal performance dashboard
         </p>
       </div>

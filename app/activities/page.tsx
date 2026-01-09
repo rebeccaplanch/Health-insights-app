@@ -90,17 +90,17 @@ export default function ActivitiesPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <main className="min-h-screen">
         <div className="text-center pt-6 pb-4">
-          <h1 className="text-4xl font-bold mb-2 text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
             Health Tracker
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 font-medium">
+          <p className="text-slate-300 font-medium">
             Your personal performance dashboard
           </p>
         </div>
         <Navigation />
-        <div className="max-w-4xl mx-auto px-4 py-8 text-center text-slate-500">
+        <div className="max-w-4xl mx-auto px-4 py-8 text-center text-slate-400">
           Loading activities...
         </div>
       </main>
@@ -108,12 +108,12 @@ export default function ActivitiesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <main className="min-h-screen">
       <div className="text-center pt-6 pb-4">
-        <h1 className="text-4xl font-bold mb-2 text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
           Health Tracker
         </h1>
-        <p className="text-slate-600 dark:text-slate-400 font-medium">
+        <p className="text-slate-300 font-medium">
           Your personal performance dashboard
         </p>
       </div>
@@ -122,10 +122,10 @@ export default function ActivitiesPage() {
 
       <div className="max-w-4xl mx-auto px-4 pb-8">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+          <h2 className="text-2xl font-bold text-white mb-2">
             Activity Record
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+          <p className="text-slate-300 text-sm font-medium">
             Edit workout types and add notes to improve your insights
           </p>
         </div>
