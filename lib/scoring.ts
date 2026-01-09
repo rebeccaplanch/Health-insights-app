@@ -213,36 +213,36 @@ export function generateInsights(
 ): Insight[] {
   const insights: Insight[] = [];
 
-  // Insight 1: Strain commentary based on yesterday's actual strain
+  // Insight 1: Readiness commentary based on previous day's strain
+  // These insights describe recovery status, not prescribe actions
   if (yesterdayStrain !== null) {
     if (yesterdayStrain > 15) {
       insights.push({
-        type: 'strain',
-        message: `Yesterday's high strain (${yesterdayStrain.toFixed(1)}/21) means your body needs recovery`,
-        suggestion: 'Focus on rest, easy movement, and active recovery today'
+        type: 'readiness',
+        message: `High previous day strain (${yesterdayStrain.toFixed(1)}/21) - recovery needed`,
+        suggestion: 'Body requires rest and light activity after intense training'
       });
-    } else if (yesterdayStrain > 10) {
+    } else if (yesterdayStrain < 8) {
       insights.push({
-        type: 'strain',
-        message: `Moderate strain yesterday (${yesterdayStrain.toFixed(1)}/21) - solid training load`,
-        suggestion: 'Listen to your body for today\'s training intensity'
-      });
-    } else if (yesterdayStrain > 0) {
-      insights.push({
-        type: 'strain',
-        message: `Low strain yesterday (${yesterdayStrain.toFixed(1)}/21) - you recovered well`,
-        suggestion: 'Good opportunity for a challenging workout today'
+        type: 'readiness',
+        message: `Low previous day strain (${yesterdayStrain.toFixed(1)}/21) - well recovered`,
+        suggestion: 'Body is ready for high-intensity training'
       });
     }
-  } else if (strain > 0) {
-    // If no yesterday data, comment on current day's logged data
-    if (strain > 15) {
-      insights.push({
-        type: 'strain',
-        message: `High activity day (${strain.toFixed(1)}/21) - plan for recovery tomorrow`,
-        suggestion: 'Monitor how you feel and prioritize rest'
-      });
-    }
+  }
+
+  // Current day's strain as context
+  if (strain > 15) {
+    insights.push({
+      type: 'strain',
+      message: `High strain day (${strain.toFixed(1)}/21) - significant training load`,
+      suggestion: 'Recovery will be important the following day'
+    });
+  } else if (strain > 10) {
+    insights.push({
+      type: 'strain',
+      message: `Moderate strain (${strain.toFixed(1)}/21) - solid training session`
+    });
   }
 
   // Insight 2: Workout-specific (what you did yesterday)
@@ -283,52 +283,52 @@ export function generateInsights(
     });
   }
 
-  // Insight 3: Steps (yesterday's steps, encourage more today if low)
+  // Insight 3: Steps
   if (steps !== null) {
     if (steps > 12000) {
       insights.push({
         type: 'steps',
-        message: `Excellent step count yesterday (${steps.toLocaleString()})`,
-        suggestion: 'Keep up the great daily movement!'
+        message: `Excellent step count (${steps.toLocaleString()})`,
+        suggestion: 'Great daily movement baseline'
       });
     } else if (steps < 5000) {
       insights.push({
         type: 'steps',
-        message: `Low step count yesterday (${steps.toLocaleString()})`,
-        suggestion: 'Try to get more steps in today with a walk or active errands'
+        message: `Low step count (${steps.toLocaleString()})`,
+        suggestion: 'Consider adding more daily movement'
       });
     }
   }
 
-  // Insight 4: Sleep quality (last night's sleep informs today's capability)
+  // Insight 4: Sleep quality
   if (sleepScore !== null) {
     if (sleepScore >= 70) {
       insights.push({
         type: 'recovery',
-        message: `Excellent sleep last night (${sleepScore}/100)`,
-        suggestion: 'You\'re well-recovered and ready for a hard training session today'
+        message: `Excellent sleep quality (${sleepScore}/100)`,
+        suggestion: 'Well-recovered and ready for high-intensity training'
       });
     } else if (sleepScore < 50) {
       insights.push({
         type: 'recovery',
-        message: `Poor sleep last night (${sleepScore}/100) affects your readiness`,
-        suggestion: 'Go easy today - prioritize rest and better sleep tonight'
+        message: `Poor sleep quality (${sleepScore}/100) impacts recovery`,
+        suggestion: 'Prioritize rest and better sleep habits'
       });
     }
   }
 
-  // Insight 5: Readiness-based advice (what you should do TODAY)
+  // Insight 5: Readiness-based guidance
   if (readiness === 'red') {
     insights.push({
       type: 'readiness',
-      message: 'Your body is showing accumulated fatigue',
-      suggestion: 'Take it easy today - prioritize rest and active recovery'
+      message: 'Accumulated fatigue detected',
+      suggestion: 'Focus on rest and active recovery'
     });
   } else if (readiness === 'yellow') {
     insights.push({
       type: 'readiness',
-      message: 'Moderate readiness - your body is managing the training load',
-      suggestion: 'Train at moderate intensity today or consider an easier session'
+      message: 'Moderate readiness - managing training load',
+      suggestion: 'Train at moderate intensity or take it easy'
     });
   } else if (readiness === 'green') {
     const avgStrain = sevenDayStrains.length > 0
@@ -337,14 +337,14 @@ export function generateInsights(
     if (avgStrain < 8) {
       insights.push({
         type: 'readiness',
-        message: 'You\'re well-recovered with low recent training load',
-        suggestion: 'Great opportunity for an intense training session today'
+        message: 'Well-recovered with low recent training load',
+        suggestion: 'Ready for intense training sessions'
       });
     } else {
       insights.push({
         type: 'readiness',
-        message: 'You\'re well-recovered and ready to train',
-        suggestion: 'Push yourself today - your body can handle it'
+        message: 'Well-recovered and ready to train',
+        suggestion: 'Body can handle high-intensity work'
       });
     }
   }
