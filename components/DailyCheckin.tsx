@@ -82,110 +82,130 @@ export default function DailyCheckin() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 relative">
-      <div className="mb-4">
-        <div className="flex justify-between items-start">
-          <div>
-            <h2 className="text-2xl font-bold">Daily Check-in</h2>
-            {date && (
-              <p className="text-gray-600 dark:text-gray-400">
-                Yesterday · {formatDateForDisplay(date)}
-              </p>
-            )}
-          </div>
-          {!isEditing && hasData && (
-            <button
-              onClick={handleEdit}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              title="Edit"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
-            </button>
+    <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 relative">
+      <div className="flex justify-between items-start mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Daily Check-in</h2>
+          {date && (
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
+              Yesterday · {formatDateForDisplay(date)}
+            </p>
           )}
         </div>
+        {!isEditing && hasData && (
+          <button
+            onClick={handleEdit}
+            className="p-2 text-slate-600 dark:text-slate-400 hover:text-neon-green dark:hover:text-neon-green transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+            title="Edit"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+          </button>
+        )}
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="steps" className="block text-sm font-medium mb-2">
-            Steps
-          </label>
-          <input
-            type="number"
-            id="steps"
-            value={steps}
-            onChange={(e) => setSteps(e.target.value)}
-            placeholder="10000"
-            disabled={!isEditing}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 ${
-              isEditing
-                ? 'border-gray-300 dark:border-gray-600'
-                : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 cursor-not-allowed'
-            }`}
-            min="0"
-          />
-        </div>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Steps */}
+          <div className={`p-4 rounded-2xl border-2 transition-all ${
+            isEditing
+              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'
+              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+          }`}>
+            <label htmlFor="steps" className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+              Steps
+            </label>
+            <input
+              type="number"
+              id="steps"
+              value={steps}
+              onChange={(e) => setSteps(e.target.value)}
+              placeholder="10000"
+              disabled={!isEditing}
+              className={`w-full text-2xl font-bold bg-transparent border-none outline-none ${
+                isEditing
+                  ? 'text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-700'
+                  : 'text-slate-600 dark:text-slate-400 cursor-not-allowed'
+              }`}
+              min="0"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="calories" className="block text-sm font-medium mb-2">
-            Calories Burned
-          </label>
-          <input
-            type="number"
-            id="calories"
-            value={caloriesBurned}
-            onChange={(e) => setCaloriesBurned(e.target.value)}
-            placeholder="2500"
-            disabled={!isEditing}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 ${
-              isEditing
-                ? 'border-gray-300 dark:border-gray-600'
-                : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 cursor-not-allowed'
-            }`}
-            min="0"
-          />
-        </div>
+          {/* Calories */}
+          <div className={`p-4 rounded-2xl border-2 transition-all ${
+            isEditing
+              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'
+              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+          }`}>
+            <label htmlFor="calories" className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+              Calories
+            </label>
+            <input
+              type="number"
+              id="calories"
+              value={caloriesBurned}
+              onChange={(e) => setCaloriesBurned(e.target.value)}
+              placeholder="2500"
+              disabled={!isEditing}
+              className={`w-full text-2xl font-bold bg-transparent border-none outline-none ${
+                isEditing
+                  ? 'text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-700'
+                  : 'text-slate-600 dark:text-slate-400 cursor-not-allowed'
+              }`}
+              min="0"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="sleepScore" className="block text-sm font-medium mb-2">
-            Sleep Score (Garmin)
-          </label>
-          <input
-            type="number"
-            id="sleepScore"
-            value={sleepScore}
-            onChange={(e) => setSleepScore(e.target.value)}
-            placeholder="75"
-            disabled={!isEditing}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 ${
-              isEditing
-                ? 'border-gray-300 dark:border-gray-600'
-                : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 cursor-not-allowed'
-            }`}
-            min="0"
-            max="100"
-          />
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            0-100 scale from your Garmin device
-          </p>
+          {/* Sleep Score */}
+          <div className={`p-4 rounded-2xl border-2 transition-all ${
+            isEditing
+              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'
+              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+          }`}>
+            <label htmlFor="sleepScore" className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+              Sleep
+            </label>
+            <input
+              type="number"
+              id="sleepScore"
+              value={sleepScore}
+              onChange={(e) => setSleepScore(e.target.value)}
+              placeholder="75"
+              disabled={!isEditing}
+              className={`w-full text-2xl font-bold bg-transparent border-none outline-none ${
+                isEditing
+                  ? 'text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-700'
+                  : 'text-slate-600 dark:text-slate-400 cursor-not-allowed'
+              }`}
+              min="0"
+              max="100"
+            />
+            <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-medium">
+              /100
+            </p>
+          </div>
         </div>
 
         {isEditing && (
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+            className="w-full bg-neon-green hover:bg-lime-500 disabled:bg-slate-300 dark:disabled:bg-slate-700 text-slate-900 font-bold py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl disabled:shadow-none"
           >
             {loading ? 'Saving...' : 'Save'}
           </button>
         )}
 
         {message && (
-          <p className={`text-center text-sm ${message.includes('✓') ? 'text-green-600' : 'text-red-600'}`}>
+          <div className={`text-center text-sm font-semibold py-2 px-4 rounded-xl ${
+            message.includes('✓')
+              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+              : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+          }`}>
             {message}
-          </p>
+          </div>
         )}
       </form>
     </div>

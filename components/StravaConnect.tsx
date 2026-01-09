@@ -75,12 +75,14 @@ export default function StravaConnect() {
 
   if (!status.connected) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="text-2xl">🚴</div>
+          <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-2xl">
+            🚴
+          </div>
           <div>
-            <h3 className="font-semibold">Connect Strava</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <h3 className="font-bold text-slate-900 dark:text-white text-lg">Connect Strava</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
               Sync your workouts automatically
             </p>
           </div>
@@ -88,7 +90,7 @@ export default function StravaConnect() {
 
         <button
           onClick={handleConnect}
-          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl"
         >
           Connect with Strava
         </button>
@@ -97,45 +99,54 @@ export default function StravaConnect() {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="text-2xl">🚴</div>
-        <div className="flex-1">
-          <h3 className="font-semibold">Strava Connected</h3>
-          {status.lastSync && (
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              Last synced: {new Date(status.lastSync).toLocaleString()}
-            </p>
-          )}
-          {status.workoutCount !== undefined && (
-            <p className="text-xs text-gray-600 dark:text-gray-400">
+    <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center">
+            <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="font-bold text-slate-900 dark:text-white text-lg">Strava Connected</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
               {status.workoutCount} workouts synced
             </p>
-          )}
+          </div>
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         <button
-          onClick={() => handleSync()}
+          onClick={() => handleSync(2)}
           disabled={syncing}
-          className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+          className="w-full bg-neon-green hover:bg-lime-500 disabled:bg-slate-300 dark:disabled:bg-slate-700 text-slate-900 font-bold py-3 px-4 rounded-xl transition-all"
         >
-          {syncing ? 'Syncing...' : 'Sync Recent Activities'}
+          {syncing ? 'Syncing...' : 'Sync Recent (2 days)'}
         </button>
 
         <button
           onClick={() => handleSync(90)}
           disabled={syncing}
-          className="w-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-400 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+          className="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-900 dark:text-white font-semibold py-3 px-4 rounded-xl transition-all"
         >
-          {syncing ? 'Syncing...' : 'Backfill Last 90 Days'}
+          {syncing ? 'Syncing...' : 'Backfill (90 days)'}
         </button>
       </div>
 
       {message && (
-        <p className={`text-sm mt-3 text-center ${message.includes('✓') ? 'text-green-600' : 'text-red-600'}`}>
+        <div className={`mt-4 text-center text-sm font-semibold py-2 px-4 rounded-xl ${
+          message.includes('✓')
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+            : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+        }`}>
           {message}
+        </div>
+      )}
+
+      {status.lastSync && (
+        <p className="text-xs text-slate-400 dark:text-slate-500 text-center mt-4 font-medium">
+          Last synced: {new Date(status.lastSync).toLocaleString()}
         </p>
       )}
     </div>
