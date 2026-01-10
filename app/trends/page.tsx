@@ -76,7 +76,7 @@ export default function TrendsPage() {
             <p className="font-mono italic text-sm text-accent mb-1">
               Analytics
             </p>
-            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1] md:text-6xl lg:text-7xl">
+            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1]">
               TRENDS
             </h1>
           </div>
@@ -129,7 +129,7 @@ export default function TrendsPage() {
           <p className="font-mono italic text-sm text-accent mb-1">
             Analytics
           </p>
-          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1] md:text-6xl lg:text-7xl">
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1]">
             TRENDS
           </h1>
         </div>
