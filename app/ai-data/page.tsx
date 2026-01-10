@@ -47,21 +47,21 @@ export default function AIDataPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col justify-center items-center">
-      <div className="px-6 space-y-4 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl w-full">
+    <main className="min-h-screen">
+      {/* Navigation - hidden on mobile */}
+      <div className="hidden md:block px-6 pt-6 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl">
+        <Navigation />
+      </div>
+
+      <div className="px-6 pt-8 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl space-y-4">
         {/* Header */}
-        <div className="pt-16 pb-4 md:pt-20 lg:pt-24">
+        <div className="pb-4">
           <p className="font-mono italic text-sm text-accent mb-1">
             AI Analysis
           </p>
           <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1] md:text-6xl lg:text-7xl">
             INSIGHTS
           </h1>
-        </div>
-
-        {/* Navigation - hidden on mobile */}
-        <div className="hidden md:block">
-          <Navigation />
         </div>
 
         {/* Instructions Card */}

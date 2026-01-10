@@ -5,15 +5,15 @@ import Navigation from '@/components/Navigation';
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen">
       {/* Navigation - hidden on mobile, visible on tablet+ */}
-      <div className="hidden md:block">
+      <div className="hidden md:block px-6 pt-6 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl">
         <Navigation />
       </div>
 
-      {/* Main Content Container - centered vertically */}
-      <div className="px-6 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl flex-1 flex flex-col justify-center">
-        {/* Welcome Header - matching Figma design */}
+      {/* Main Content Container - top aligned with 32px gap from nav */}
+      <div className="px-6 pt-8 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl">
+        {/* Welcome Header */}
         <div className="pb-4">
           <p className="font-mono italic text-sm text-accent mb-1">
             Welcome back
@@ -25,11 +25,9 @@ export default function Home() {
 
         {/* Cards */}
         <div className="space-y-4">
-        <Dashboard />
-
-        <DailyCheckin />
-
-        <StravaConnect />
+          <Dashboard />
+          <DailyCheckin />
+          <StravaConnect />
         </div>
       </div>
 
