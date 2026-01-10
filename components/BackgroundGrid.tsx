@@ -92,7 +92,7 @@ export default function BackgroundGrid() {
             <path
               d="M 24 0 L 0 0 0 24"
               fill="none"
-              stroke="rgba(255, 255, 255, 0.025)"
+              stroke="rgba(255, 255, 255, 0.105)"
               strokeWidth="1"
             />
           </pattern>
@@ -107,8 +107,8 @@ export default function BackgroundGrid() {
               r={`${spot.radius}px`}
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0%" stopColor="rgba(255, 255, 255, 0.12)" />
-              <stop offset="60%" stopColor="rgba(255, 255, 255, 0.06)" />
+              <stop offset="0%" stopColor="rgba(255, 255, 255, 0.20)" />
+              <stop offset="60%" stopColor="rgba(255, 255, 255, 0.14)" />
               <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
             </radialGradient>
           ))}
