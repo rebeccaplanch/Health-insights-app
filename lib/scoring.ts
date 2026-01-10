@@ -213,35 +213,23 @@ export function generateInsights(
 ): Insight[] {
   const insights: Insight[] = [];
 
-  // Insight 1: Readiness commentary based on previous day's strain
-  // These insights describe recovery status, not prescribe actions
-  if (yesterdayStrain !== null) {
-    if (yesterdayStrain > 15) {
-      insights.push({
-        type: 'readiness',
-        message: `High previous day strain (${yesterdayStrain.toFixed(1)}/21) - recovery needed`,
-        suggestion: 'Body requires rest and light activity after intense training'
-      });
-    } else if (yesterdayStrain < 8) {
-      insights.push({
-        type: 'readiness',
-        message: `Low previous day strain (${yesterdayStrain.toFixed(1)}/21) - well recovered`,
-        suggestion: 'Body is ready for high-intensity training'
-      });
-    }
-  }
-
-  // Current day's strain as context
+  // Insight 1: Current day's strain and what contributed to it
   if (strain > 15) {
     insights.push({
       type: 'strain',
-      message: `High strain day (${strain.toFixed(1)}/21) - significant training load`,
-      suggestion: 'Recovery will be important the following day'
+      message: `High strain (${strain.toFixed(1)}/21) - significant training load`,
+      suggestion: 'Recovery will be important'
     });
   } else if (strain > 10) {
     insights.push({
       type: 'strain',
       message: `Moderate strain (${strain.toFixed(1)}/21) - solid training session`
+    });
+  } else if (strain > 0 && strain <= 6) {
+    insights.push({
+      type: 'strain',
+      message: `Light strain (${strain.toFixed(1)}/21) - low training load`,
+      suggestion: 'Room for more activity if desired'
     });
   }
 
@@ -317,18 +305,18 @@ export function generateInsights(
     }
   }
 
-  // Insight 5: Readiness-based guidance
+  // Insight 5: Readiness-based guidance (focus on current status and recent load)
   if (readiness === 'red') {
     insights.push({
       type: 'readiness',
-      message: 'Accumulated fatigue detected',
-      suggestion: 'Focus on rest and active recovery'
+      message: 'Low readiness - accumulated fatigue from recent training',
+      suggestion: 'Prioritize rest and recovery'
     });
   } else if (readiness === 'yellow') {
     insights.push({
       type: 'readiness',
       message: 'Moderate readiness - managing training load',
-      suggestion: 'Train at moderate intensity or take it easy'
+      suggestion: 'Consider moderate intensity training'
     });
   } else if (readiness === 'green') {
     const avgStrain = sevenDayStrains.length > 0
@@ -337,14 +325,14 @@ export function generateInsights(
     if (avgStrain < 8) {
       insights.push({
         type: 'readiness',
-        message: 'Well-recovered with low recent training load',
-        suggestion: 'Ready for intense training sessions'
+        message: 'High readiness - well-recovered with low recent load',
+        suggestion: 'Ready for intense training'
       });
     } else {
       insights.push({
         type: 'readiness',
-        message: 'Well-recovered and ready to train',
-        suggestion: 'Body can handle high-intensity work'
+        message: 'High readiness - recovered and ready to train',
+        suggestion: 'Can handle high-intensity work'
       });
     }
   }
