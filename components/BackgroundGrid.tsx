@@ -293,8 +293,8 @@ function generateConfig(gridCols: number, gridRows: number) {
   }));
 
   const diamonds = DIAMOND_PLACEMENTS.map(d => ({
-    gridX: Math.floor(d.relX * gridCols) + (d.gridOffsetX || 0),
-    gridY: Math.floor(d.relY * gridRows) + (d.gridOffsetY || 0),
+    gridX: Math.floor(d.relX * gridCols),
+    gridY: Math.floor(d.relY * gridRows),
   }));
 
   return { clusters, sparkles, diamonds };
