@@ -117,24 +117,6 @@ export default function BackgroundGrid() {
         className="fixed inset-0 -z-10 w-full h-full pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <defs>
-          {/* Radial gradient masks for each spotlight */}
-          {spots.map((spot, index) => (
-            <radialGradient
-              key={`spot-gradient-${index}`}
-              id={`spot-gradient-${index}`}
-              cx={`${spot.x}%`}
-              cy={`${spot.y}%`}
-              r={`${spot.radius}px`}
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="rgba(255, 255, 255, 0.20)" />
-              <stop offset="60%" stopColor="rgba(255, 255, 255, 0.14)" />
-              <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
-            </radialGradient>
-          ))}
-        </defs>
-
         {/* Randomized grid lines */}
         {gridLines.map((line, index) => (
           <line
@@ -148,21 +130,9 @@ export default function BackgroundGrid() {
           />
         ))}
 
-        {/* Enhanced grid layers for each spot */}
+        {/* Filled grid boxes */}
         {spots.map((spot, index) => (
           <g key={`spot-${index}`}>
-            {/* Enhanced grid circle overlay */}
-            <circle
-              cx={`${spot.x}%`}
-              cy={`${spot.y}%`}
-              r={spot.radius}
-              fill="none"
-              stroke={`url(#spot-gradient-${index})`}
-              strokeWidth={spot.radius * 2}
-              opacity="0.8"
-            />
-
-            {/* Filled boxes within this spot */}
             {spot.filledBoxes.map((box, boxIndex) => (
               <rect
                 key={`box-${index}-${boxIndex}`}
