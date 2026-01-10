@@ -121,16 +121,10 @@ function StatCard({
 function InsightRow({ message }: { message: string }) {
   return (
     <div className="flex gap-2.5 items-start">
-      {/* Alert/Info icon */}
+      {/* Priority/Info icon */}
       <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" 
-            stroke="#7fd8be" 
-            strokeWidth="1.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#7fd8be">
+          <path d="M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z"/>
         </svg>
       </div>
       <p className="font-sans text-xs text-[#f1f1f1] leading-normal flex-1">
