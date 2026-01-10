@@ -5,24 +5,37 @@ import Navigation from '@/components/Navigation';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <div className="text-center pt-6 pb-4">
-        <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
-          Health Tracker
-        </h1>
-        <p className="text-slate-300 font-medium">
-          Your personal performance dashboard
-        </p>
+    <main className="min-h-screen flex flex-col">
+      {/* Navigation - hidden on mobile, visible on tablet+ */}
+      <div className="hidden md:block">
+        <Navigation />
       </div>
 
-      <Navigation />
+      {/* Main Content Container - centered vertically */}
+      <div className="px-6 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl flex-1 flex flex-col justify-center">
+        {/* Welcome Header - matching Figma design */}
+        <div className="pb-4">
+          <p className="font-mono italic text-sm text-accent mb-1">
+            Welcome back
+          </p>
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1] md:text-6xl lg:text-7xl">
+            REBECCA
+          </h1>
+        </div>
 
-      <div className="max-w-2xl mx-auto px-4 space-y-4 pb-8">
+        {/* Cards */}
+        <div className="space-y-4">
         <Dashboard />
 
         <DailyCheckin />
 
         <StravaConnect />
+        </div>
+      </div>
+
+      {/* Mobile Navigation - fixed bottom nav on mobile */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+        <Navigation />
       </div>
     </main>
   );

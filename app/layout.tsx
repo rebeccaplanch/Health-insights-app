@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { DM_Sans, DM_Mono } from 'next/font/google';
 import "./globals.css";
 import BackgroundGrid from "@/components/BackgroundGrid";
 
-const ibmPlexSans = IBM_Plex_Sans({
+const dmSans = DM_Sans({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-ibm-plex-sans',
+  variable: '--font-dm-sans',
   display: 'swap',
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ['400', '500', '600'],
+const dmMono = DM_Mono({
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-ibm-plex-mono',
+  variable: '--font-dm-mono',
   display: 'swap',
 });
 
@@ -40,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`}>
       <head>
         <link rel="apple-touch-icon" href="/icon.svg" />
       </head>

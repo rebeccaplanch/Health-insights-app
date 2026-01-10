@@ -4,9 +4,11 @@
 
 :root {
   --background: transparent;
-  --foreground: #f8fafc;
-  --card-bg: #ffffff;
-  --border-color: #e2e8f0;
+  --foreground: #f1f1f1;
+  --accent-mint: #7fd8be;
+  --card-bg-start: rgba(255, 255, 255, 0.05);
+  --card-bg-end: rgba(255, 255, 255, 0.03);
+  --status-bg: #12192f;
 }
 
 body {
@@ -15,29 +17,56 @@ body {
   min-height: 100vh;
 }
 
+@layer components {
+  /* Glass card component matching Figma design */
+  /* Heavy warped backdrop blur to abstract the grid behind cards */
+  .glass-card {
+    @apply bg-[#1a2542] rounded-lg;
+  }
+
+  /* Status pill (Ready, Moderate, etc.) */
+  .status-pill {
+    background: var(--status-bg);
+    border-radius: 24px;
+    padding: 2px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Accent text color */
+  .text-accent {
+    color: var(--accent-mint);
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
-  .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  @media (prefers-color-scheme: light) {
-    .glass-card {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-  }
-
   /* Custom z-index utilities for BackgroundGrid layers */
+  .-z-5 { z-index: -5; }
+  .-z-10 { z-index: -10; }
   .-z-11 { z-index: -11; }
   .-z-12 { z-index: -12; }
   .-z-13 { z-index: -13; }
   .-z-14 { z-index: -14; }
   .-z-15 { z-index: -15; }
+
+  /* Uppercase tracking from Figma */
+  .tracking-wide-upper {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .tracking-wider-upper {
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .tracking-display {
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+  }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import Navigation from '@/components/Navigation';
 import { formatDateForDisplay } from '@/lib/utils';
 
@@ -35,6 +35,10 @@ interface TrendsData {
   };
 }
 
+/**
+ * Trends page - displays charts and analytics for health data
+ * Design system: DM Mono/Sans, accent teal, solid navy cards
+ */
 export default function TrendsPage() {
   const [data, setData] = useState<TrendsData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,22 +65,28 @@ export default function TrendsPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen">
-        <div className="text-center pt-6 pb-4">
-          <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
-            Health Tracker
-          </h1>
-          <p className="text-slate-300 font-medium">
-            Your personal performance dashboard
-          </p>
+      <main className="min-h-screen flex flex-col justify-center items-center">
+        <div className="px-6 space-y-4 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl w-full">
+          <div className="pt-16 pb-4 md:pt-20 lg:pt-24">
+            <p className="font-mono italic text-sm text-accent mb-1">
+              Analytics
+            </p>
+            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1] md:text-6xl lg:text-7xl">
+              TRENDS
+            </h1>
+          </div>
+
+          <div className="hidden md:block">
+            <Navigation />
+          </div>
+
+          <div className="glass-card p-8 text-center">
+            <p className="text-[#f1f1f1]/60 font-mono">Loading trends...</p>
+          </div>
         </div>
 
-        <Navigation />
-
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-center justify-center p-8">
-            <div className="text-slate-400">Loading trends...</div>
-          </div>
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+          <Navigation />
         </div>
       </main>
     );
@@ -88,7 +98,7 @@ export default function TrendsPage() {
 
   // Prepare chart data
   const strainChartData = data.dailyEntries.map(entry => ({
-    date: formatDateForDisplay(entry.date).split(' ').slice(1).join(' '), // Just "Mon 8"
+    date: formatDateForDisplay(entry.date).split(' ').slice(1).join(' '),
     strain: entry.strain || 0,
   }));
 
@@ -98,99 +108,115 @@ export default function TrendsPage() {
   }));
 
   const readinessData = [
-    { name: 'Green', value: data.summary.readinessCount.green, color: '#22c55e' },
+    { name: 'Green', value: data.summary.readinessCount.green, color: '#7fd8be' },
     { name: 'Yellow', value: data.summary.readinessCount.yellow, color: '#eab308' },
     { name: 'Red', value: data.summary.readinessCount.red, color: '#ef4444' },
   ].filter(item => item.value > 0);
 
-  const COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4'];
+  const COLORS = ['#7fd8be', '#6E81B7', '#8b5cf6', '#f59e0b', '#ec4899', '#06b6d4'];
 
   return (
-    <main className="min-h-screen">
-      <div className="text-center pt-6 pb-4">
-        <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
-          Health Tracker
-        </h1>
-        <p className="text-slate-300 font-medium">
-          Your personal performance dashboard
-        </p>
-      </div>
-
-      <Navigation />
-
-      <div className="max-w-6xl mx-auto px-4 space-y-6 pb-8">
+    <main className="min-h-screen flex flex-col justify-center items-center">
+      <div className="px-6 space-y-4 pb-20 max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl w-full">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-white">Trends & Insights</h2>
-          </div>
+        <div className="pt-16 pb-4 md:pt-20 lg:pt-24">
+          <p className="font-mono italic text-sm text-accent mb-1">
+            Analytics
+          </p>
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1] md:text-6xl lg:text-7xl">
+            TRENDS
+          </h1>
+        </div>
 
-          {/* Period selector */}
-          <div className="flex gap-2">
+        {/* Navigation - hidden on mobile */}
+        <div className="hidden md:block">
+          <Navigation />
+        </div>
+
+        {/* Period Selector */}
+        <div className="flex gap-2">
+          {[7, 30, 90].map((days) => (
             <button
-              onClick={() => setPeriod(7)}
-              className={`px-3 py-1 rounded text-sm ${period === 7 ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700'}`}
+              key={days}
+              onClick={() => setPeriod(days)}
+              className={`px-4 py-2 rounded-lg font-mono text-sm transition-all ${
+                period === days
+                  ? 'bg-accent text-[#12192f]'
+                  : 'bg-[#12192f] text-[#f1f1f1]/60 hover:text-[#f1f1f1]'
+              }`}
             >
-              7 days
+              {days}d
             </button>
-            <button
-              onClick={() => setPeriod(30)}
-              className={`px-3 py-1 rounded text-sm ${period === 30 ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700'}`}
-            >
-              30 days
-            </button>
-            <button
-              onClick={() => setPeriod(90)}
-              className={`px-3 py-1 rounded text-sm ${period === 90 ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700'}`}
-            >
-              90 days
-            </button>
-          </div>
+          ))}
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Avg Strain</div>
-            <div className="text-2xl font-bold">{data.summary.avgStrain}</div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="glass-card p-4">
+            <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Avg Strain</p>
+            <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.avgStrain}</p>
           </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Total Workouts</div>
-            <div className="text-2xl font-bold">{data.summary.totalWorkouts}</div>
+          <div className="glass-card p-4">
+            <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Workouts</p>
+            <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.totalWorkouts}</p>
           </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Avg Steps/Day</div>
-            <div className="text-2xl font-bold">{data.summary.avgSteps.toLocaleString()}</div>
+          <div className="glass-card p-4">
+            <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Avg Steps</p>
+            <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.avgSteps.toLocaleString()}</p>
           </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Active Days</div>
-            <div className="text-2xl font-bold">{data.summary.activeDays}</div>
+          <div className="glass-card p-4">
+            <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Active Days</p>
+            <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.activeDays}</p>
           </div>
         </div>
 
         {/* Strain Trend Chart */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-4">Strain Trend</h2>
-          <ResponsiveContainer width="100%" height={300}>
+        <div className="glass-card p-4">
+          <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Strain Trend</h2>
+          <ResponsiveContainer width="100%" height={200}>
             <LineChart data={strainChartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" fontSize={12} />
-              <YAxis domain={[0, 21]} />
-              <Tooltip />
-              <Line type="monotone" dataKey="strain" stroke="#3b82f6" strokeWidth={2} dot={{ r: 4 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#6E81B7" strokeOpacity={0.2} />
+              <XAxis 
+                dataKey="date" 
+                fontSize={10} 
+                stroke="#f1f1f1" 
+                strokeOpacity={0.4}
+                tick={{ fill: '#f1f1f1', fillOpacity: 0.4 }}
+              />
+              <YAxis 
+                domain={[0, 21]} 
+                fontSize={10}
+                stroke="#f1f1f1" 
+                strokeOpacity={0.4}
+                tick={{ fill: '#f1f1f1', fillOpacity: 0.4 }}
+              />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: '#1a2542', 
+                  border: 'none', 
+                  borderRadius: '8px',
+                  fontFamily: 'var(--font-mono)'
+                }}
+                labelStyle={{ color: '#f1f1f1' }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="strain" 
+                stroke="#7fd8be" 
+                strokeWidth={2} 
+                dot={{ r: 3, fill: '#7fd8be' }} 
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Activity Type Breakdown */}
+        {/* Charts Row */}
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Activity Types */}
           {activityTypeData.length > 0 && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold mb-4">Activity Types</h2>
-              <ResponsiveContainer width="100%" height={250}>
+            <div className="glass-card p-4">
+              <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Activity Types</h2>
+              <ResponsiveContainer width="100%" height={180}>
                 <PieChart>
                   <Pie
                     data={activityTypeData}
@@ -198,15 +224,23 @@ export default function TrendsPage() {
                     cy="50%"
                     labelLine={false}
                     label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
-                    outerRadius={80}
+                    outerRadius={60}
                     fill="#8884d8"
                     dataKey="value"
+                    fontSize={10}
                   >
                     {activityTypeData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a2542', 
+                      border: 'none', 
+                      borderRadius: '8px',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -214,15 +248,33 @@ export default function TrendsPage() {
 
           {/* Readiness Distribution */}
           {readinessData.length > 0 && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold mb-4">Readiness Distribution</h2>
-              <ResponsiveContainer width="100%" height={250}>
+            <div className="glass-card p-4">
+              <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Readiness</h2>
+              <ResponsiveContainer width="100%" height={180}>
                 <BarChart data={readinessData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="value" fill="#8884d8">
+                  <CartesianGrid strokeDasharray="3 3" stroke="#6E81B7" strokeOpacity={0.2} />
+                  <XAxis 
+                    dataKey="name" 
+                    fontSize={10}
+                    stroke="#f1f1f1" 
+                    strokeOpacity={0.4}
+                    tick={{ fill: '#f1f1f1', fillOpacity: 0.4 }}
+                  />
+                  <YAxis 
+                    fontSize={10}
+                    stroke="#f1f1f1" 
+                    strokeOpacity={0.4}
+                    tick={{ fill: '#f1f1f1', fillOpacity: 0.4 }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a2542', 
+                      border: 'none', 
+                      borderRadius: '8px',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
+                  <Bar dataKey="value" fill="#8884d8" radius={[4, 4, 0, 0]}>
                     {readinessData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
@@ -234,65 +286,83 @@ export default function TrendsPage() {
         </div>
 
         {/* Personal Bests */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-4">Personal Bests (Last {period} Days)</h2>
-          <div className="grid grid-cols-3 gap-4">
+        <div className="glass-card p-4">
+          <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">
+            Personal Bests <span className="text-accent">({period}d)</span>
+          </h2>
+          <div className="grid grid-cols-3 gap-3">
             <div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Highest Strain</div>
-              <div className="text-xl font-bold text-blue-600">{data.summary.maxStrain.toFixed(1)}</div>
+              <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 mb-1">Highest Strain</p>
+              <p className="font-mono text-xl text-accent">{data.summary.maxStrain.toFixed(1)}</p>
             </div>
             <div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Most Steps</div>
-              <div className="text-xl font-bold text-blue-600">{data.summary.maxSteps.toLocaleString()}</div>
+              <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 mb-1">Most Steps</p>
+              <p className="font-mono text-xl text-accent">{data.summary.maxSteps.toLocaleString()}</p>
             </div>
             <div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Most Calories</div>
-              <div className="text-xl font-bold text-blue-600">{data.summary.maxCalories.toLocaleString()}</div>
+              <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 mb-1">Most Calories</p>
+              <p className="font-mono text-xl text-accent">{data.summary.maxCalories.toLocaleString()}</p>
             </div>
           </div>
         </div>
 
         {/* Training Insights */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-4">Training Insights</h2>
+        <div className="glass-card p-4">
+          <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Insights</h2>
           <div className="space-y-3">
             {data.summary.avgStrain > 12 && (
-              <div className="border-l-4 border-orange-500 pl-4">
-                <p className="text-sm font-medium">High Average Load</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <div className="border-l-2 border-amber-500 pl-3">
+                <p className="font-mono text-sm text-[#f1f1f1]">High Average Load</p>
+                <p className="text-xs text-[#f1f1f1]/60 mt-1">
                   Your average strain of {data.summary.avgStrain} is high. Consider incorporating more recovery days.
                 </p>
               </div>
             )}
 
             {data.summary.avgStrain < 6 && (
-              <div className="border-l-4 border-blue-500 pl-4">
-                <p className="text-sm font-medium">Room to Increase Load</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <div className="border-l-2 border-accent pl-3">
+                <p className="font-mono text-sm text-[#f1f1f1]">Room to Increase Load</p>
+                <p className="text-xs text-[#f1f1f1]/60 mt-1">
                   Your average strain is relatively low. You may have capacity for increased training volume.
                 </p>
               </div>
             )}
 
             {data.summary.readinessCount.red > data.summary.activeDays * 0.3 && (
-              <div className="border-l-4 border-red-500 pl-4">
-                <p className="text-sm font-medium">Frequent Low Readiness</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <div className="border-l-2 border-red-500 pl-3">
+                <p className="font-mono text-sm text-[#f1f1f1]">Frequent Low Readiness</p>
+                <p className="text-xs text-[#f1f1f1]/60 mt-1">
                   You've had red readiness on {data.summary.readinessCount.red} days. Focus on recovery and sleep quality.
                 </p>
               </div>
             )}
 
             {data.summary.activeDays / period > 0.8 && (
-              <div className="border-l-4 border-green-500 pl-4">
-                <p className="text-sm font-medium">Great Consistency!</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <div className="border-l-2 border-accent pl-3">
+                <p className="font-mono text-sm text-[#f1f1f1]">Great Consistency!</p>
+                <p className="text-xs text-[#f1f1f1]/60 mt-1">
                   You've been active on {data.summary.activeDays} out of {period} days. Keep up the momentum!
+                </p>
+              </div>
+            )}
+
+            {data.summary.avgStrain >= 6 && data.summary.avgStrain <= 12 && 
+             data.summary.readinessCount.red <= data.summary.activeDays * 0.3 &&
+             data.summary.activeDays / period <= 0.8 && (
+              <div className="border-l-2 border-[#6E81B7] pl-3">
+                <p className="font-mono text-sm text-[#f1f1f1]">Balanced Training</p>
+                <p className="text-xs text-[#f1f1f1]/60 mt-1">
+                  Your training load is well-balanced. Keep monitoring your readiness to optimize performance.
                 </p>
               </div>
             )}
           </div>
         </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+        <Navigation />
       </div>
     </main>
   );

@@ -9,27 +9,44 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-ibm-plex-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-ibm-plex-mono)', 'monospace'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-dm-mono)', 'monospace'],
       },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // Lime/Neon accent colors inspired by the design references
-        lime: {
-          400: '#bef264',
-          500: '#a3e635',
-          600: '#84cc16',
+        // Accent colors from Figma design
+        accent: {
+          mint: '#7fd8be',    // Primary accent (teal/mint green)
+          green: '#7fd8be',
         },
+        // Legacy neon colors (keeping for compatibility)
         neon: {
-          green: '#C6FF00',
-          lime: '#D4FF33',
+          green: '#7fd8be',   // Updated to match new design
+          lime: '#7fd8be',
+        },
+        // Card and UI colors
+        card: {
+          bg: 'rgba(255, 255, 255, 0.05)',
+          border: 'rgba(255, 255, 255, 0.1)',
+        },
+        // Status colors
+        status: {
+          ready: '#7fd8be',
+          moderate: '#fbbf24',
+          rest: '#ef4444',
         },
       },
       borderRadius: {
         '2xl': '1rem',
         '3xl': '1.5rem',
         '4xl': '2rem',
+      },
+      fontSize: {
+        // Custom sizes matching Figma
+        'display': ['48px', { lineHeight: '1', letterSpacing: '0.05em' }],
+        'stat': ['40px', { lineHeight: '1' }],
+        'stat-sm': ['24px', { lineHeight: '1' }],
       },
     },
   },

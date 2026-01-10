@@ -3,6 +3,122 @@
 import { useState, useEffect } from 'react';
 import { getYesterdayDate, formatDateForDisplay } from '@/lib/utils';
 
+/**
+ * Up arrow icon (no background fill)
+ */
+function UpArrow({ className = '' }: { className?: string }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      height="24" 
+      viewBox="0 -960 960 960" 
+      width="24" 
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M358-598l-58-58 180-180 180 180-58 58-122-122-122 122Z"/>
+    </svg>
+  );
+}
+
+/**
+ * Down arrow icon (no background fill)
+ */
+function DownArrow({ className = '' }: { className?: string }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      height="24" 
+      viewBox="0 -960 960 960" 
+      width="24" 
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M480-120 300-300l58-58 122 122 122-122 58 58-180 180Z"/>
+    </svg>
+  );
+}
+
+/**
+ * Number input with up/down arrows
+ */
+function NumberInput({
+  id,
+  value,
+  onChange,
+  placeholder = '–',
+  disabled = false,
+  min,
+  max,
+  suffix,
+}: {
+  id: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  min?: number;
+  max?: number;
+  suffix?: string;
+}) {
+  const increment = () => {
+    const current = parseInt(value) || 0;
+    if (max !== undefined && current >= max) return;
+    onChange((current + 1).toString());
+  };
+
+  const decrement = () => {
+    const current = parseInt(value) || 0;
+    if (min !== undefined && current <= min) return;
+    if (current > 0) onChange((current - 1).toString());
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex items-baseline gap-1 flex-1">
+        <input
+          type="number"
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={`w-full font-mono font-medium text-xl bg-transparent border-none outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
+            !disabled
+              ? 'text-[#f1f1f1] placeholder:text-[#f1f1f1]/30'
+              : 'text-[#f1f1f1]/60 cursor-not-allowed'
+          }`}
+          min={min}
+          max={max}
+        />
+        {suffix && (
+          <span className="font-mono text-xs text-[#f1f1f1]/40">{suffix}</span>
+        )}
+      </div>
+      {!disabled && (
+        <div className="flex flex-col -space-y-4">
+          <button
+            type="button"
+            onClick={increment}
+            className="text-[#f1f1f1]/40 hover:text-[#f1f1f1] transition-colors"
+            tabIndex={-1}
+          >
+            <UpArrow />
+          </button>
+          <button
+            type="button"
+            onClick={decrement}
+            className="text-[#f1f1f1]/40 hover:text-[#f1f1f1] transition-colors"
+            tabIndex={-1}
+          >
+            <DownArrow />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function DailyCheckin() {
   const [date, setDate] = useState('');
   const [steps, setSteps] = useState('');
@@ -82,12 +198,12 @@ export default function DailyCheckin() {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 relative">
-      <div className="flex justify-between items-start mb-6">
+    <div className="glass-card px-3 py-4 relative">
+      <div className="flex justify-between items-start mb-4">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Daily Check-in</h2>
+          <h2 className="font-mono font-medium text-sm text-accent">Daily Check-in</h2>
           {date && (
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
+            <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mt-1">
               Yesterday · {formatDateForDisplay(date)}
             </p>
           )}
@@ -95,114 +211,93 @@ export default function DailyCheckin() {
         {!isEditing && hasData && (
           <button
             onClick={handleEdit}
-            className="p-2 text-slate-600 dark:text-slate-400 hover:text-neon-green dark:hover:text-neon-green transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+            className="p-2 text-[#f1f1f1]/60 hover:text-accent transition-colors rounded-lg"
             title="Edit"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
           </button>
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2">
           {/* Steps */}
-          <div className={`p-4 rounded-2xl border-2 transition-all ${
+          <div className={`p-3 rounded-lg transition-all ${
             isEditing
-              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'
-              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+              ? 'bg-white/5'
+              : 'bg-white/[0.02]'
           }`}>
-            <label htmlFor="steps" className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+            <label htmlFor="steps" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-2">
               Steps
             </label>
-            <input
-              type="number"
+            <NumberInput
               id="steps"
               value={steps}
-              onChange={(e) => setSteps(e.target.value)}
-              placeholder="10000"
+              onChange={setSteps}
               disabled={!isEditing}
-              className={`w-full text-2xl font-bold bg-transparent border-none outline-none ${
-                isEditing
-                  ? 'text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-700'
-                  : 'text-slate-600 dark:text-slate-400 cursor-not-allowed'
-              }`}
-              min="0"
+              min={0}
             />
           </div>
 
           {/* Calories */}
-          <div className={`p-4 rounded-2xl border-2 transition-all ${
+          <div className={`p-3 rounded-lg transition-all ${
             isEditing
-              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'
-              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+              ? 'bg-white/5'
+              : 'bg-white/[0.02]'
           }`}>
-            <label htmlFor="calories" className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+            <label htmlFor="calories" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-2">
               Calories
             </label>
-            <input
-              type="number"
+            <NumberInput
               id="calories"
               value={caloriesBurned}
-              onChange={(e) => setCaloriesBurned(e.target.value)}
-              placeholder="2500"
+              onChange={setCaloriesBurned}
               disabled={!isEditing}
-              className={`w-full text-2xl font-bold bg-transparent border-none outline-none ${
-                isEditing
-                  ? 'text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-700'
-                  : 'text-slate-600 dark:text-slate-400 cursor-not-allowed'
-              }`}
-              min="0"
+              min={0}
             />
           </div>
 
           {/* Sleep Score */}
-          <div className={`p-4 rounded-2xl border-2 transition-all ${
+          <div className={`p-3 rounded-lg transition-all ${
             isEditing
-              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'
-              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+              ? 'bg-white/5'
+              : 'bg-white/[0.02]'
           }`}>
-            <label htmlFor="sleepScore" className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+            <label htmlFor="sleepScore" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-2">
               Sleep
             </label>
-            <input
-              type="number"
+            <NumberInput
               id="sleepScore"
               value={sleepScore}
-              onChange={(e) => setSleepScore(e.target.value)}
-              placeholder="75"
+              onChange={setSleepScore}
               disabled={!isEditing}
-              className={`w-full text-2xl font-bold bg-transparent border-none outline-none ${
-                isEditing
-                  ? 'text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-700'
-                  : 'text-slate-600 dark:text-slate-400 cursor-not-allowed'
-              }`}
-              min="0"
-              max="100"
+              min={0}
+              max={100}
+              suffix="/100"
             />
-            <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-medium">
-              /100
-            </p>
           </div>
         </div>
 
         {isEditing && (
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-neon-green hover:bg-lime-500 disabled:bg-slate-300 dark:disabled:bg-slate-700 text-slate-900 font-bold py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl disabled:shadow-none"
-          >
-            {loading ? 'Saving...' : 'Save'}
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-[#12192f] hover:bg-[#161e38] disabled:bg-[#12192f]/50 text-accent font-mono font-medium py-2 px-6 rounded-lg transition-all"
+            >
+              {loading ? 'Saving...' : 'Save'}
+            </button>
+          </div>
         )}
 
         {message && (
-          <div className={`text-center text-sm font-semibold py-2 px-4 rounded-xl ${
+          <div className={`text-center font-mono text-xs py-2 px-3 rounded-lg ${
             message.includes('✓')
-              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-              : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+              ? 'bg-accent/20 text-accent'
+              : 'bg-red-500/20 text-red-400'
           }`}>
             {message}
           </div>

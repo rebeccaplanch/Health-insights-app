@@ -14,6 +14,132 @@ interface DashboardData {
   workoutCount: number;
 }
 
+/**
+ * Circular progress indicator for strain display
+ */
+function StrainCircle({ 
+  value, 
+  max = 21, 
+  size = 36 
+}: { 
+  value: number | null; 
+  max?: number; 
+  size?: number;
+}) {
+  const percentage = value !== null ? (value / max) * 100 : 0;
+  const strokeWidth = 3;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (circumference * percentage) / 100;
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg className="transform -rotate-90" width={size} height={size}>
+        {/* Background circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="rgba(255, 255, 255, 0.2)"
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+        {/* Progress circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#7fd8be"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          className="transition-all duration-1000 ease-out"
+        />
+      </svg>
+    </div>
+  );
+}
+
+/**
+ * Status indicator dot
+ */
+function StatusDot({ color = '#7fd8be' }: { color?: string }) {
+  return (
+    <div 
+      className="w-1.5 h-1.5 rounded-full" 
+      style={{ backgroundColor: color }}
+    />
+  );
+}
+
+/**
+ * Glass card wrapper component
+ */
+function GlassCard({ 
+  children, 
+  className = '' 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+}) {
+  return (
+    <div className={`glass-card px-3 py-4 ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * Stat card for quick metrics (Steps, Calories, Workouts)
+ */
+function StatCard({ 
+  label, 
+  value 
+}: { 
+  label: string; 
+  value: string | number;
+}) {
+  return (
+    <GlassCard className="flex-1">
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]">
+          {label}
+        </span>
+        <span className="font-mono font-medium text-2xl text-[#f1f1f1]">
+          {value}
+        </span>
+      </div>
+    </GlassCard>
+  );
+}
+
+/**
+ * Insight row with icon
+ */
+function InsightRow({ message }: { message: string }) {
+  return (
+    <div className="flex gap-2.5 items-start">
+      {/* Alert/Info icon */}
+      <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" 
+            stroke="#7fd8be" 
+            strokeWidth="1.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      <p className="font-sans text-xs text-[#f1f1f1] leading-normal flex-1">
+        {message}
+      </p>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +151,10 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
+  /**
+   * Fetches dashboard data from the API
+   * Preserves all existing data fetching logic
+   */
   const fetchDashboardData = async () => {
     try {
       // Fetch the most recent entry with complete data
@@ -90,7 +220,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-gray-500">Loading...</div>
+        <div className="text-[#f1f1f1]/60 font-mono text-sm">Loading...</div>
       </div>
     );
   }
@@ -99,154 +229,81 @@ export default function Dashboard() {
     return null;
   }
 
+  // Readiness status configuration
   const readinessConfig = {
-    green: {
-      color: 'bg-neon-green',
-      textColor: 'text-neon-green',
-      label: 'Ready',
-    },
-    yellow: {
-      color: 'bg-yellow-400',
-      textColor: 'text-yellow-400',
-      label: 'Moderate',
-    },
-    red: {
-      color: 'bg-red-500',
-      textColor: 'text-red-500',
-      label: 'Rest Needed',
-    },
+    green: { label: 'Ready', color: '#7fd8be' },
+    yellow: { label: 'Moderate', color: '#fbbf24' },
+    red: { label: 'Rest', color: '#ef4444' },
   }[data.readiness || 'green'];
 
-  const strainPercentage = data.strain !== null ? (data.strain / 21) * 100 : 0;
-  const circumference = 2 * Math.PI * 90; // radius = 90
-  const strokeDashoffset = circumference - (circumference * strainPercentage) / 100;
+  // Format values for display
+  const strainDisplay = data.strain !== null ? data.strain.toFixed(1) : '–';
+  const stepsDisplay = data.steps !== null ? data.steps.toLocaleString() : '–';
+  const caloriesDisplay = data.caloriesBurned !== null ? data.caloriesBurned.toLocaleString() : '–';
 
   return (
-    <div className="space-y-4">
-      {/* Strain Circle - Hero Section */}
-      <div className="bg-slate-900 dark:bg-slate-800/50 rounded-3xl p-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-neon-green/5 rounded-full blur-3xl"></div>
-
-        <div className="flex flex-col items-center relative z-10">
-          <div className="text-sm font-medium text-slate-400 tracking-wide uppercase mb-6">
-            Current Strain
-          </div>
-
-          {/* Circular Progress */}
-          <div className="relative w-56 h-56">
-            <svg className="transform -rotate-90 w-full h-full">
-              {/* Background circle */}
-              <circle
-                cx="112"
-                cy="112"
-                r="90"
-                stroke="currentColor"
-                strokeWidth="12"
-                fill="none"
-                className="text-slate-700/50"
-              />
-              {/* Progress circle */}
-              <circle
-                cx="112"
-                cy="112"
-                r="90"
-                stroke="currentColor"
-                strokeWidth="12"
-                fill="none"
-                strokeDasharray={circumference}
-                strokeDashoffset={strokeDashoffset}
-                className="text-neon-green transition-all duration-1000 ease-out"
-                strokeLinecap="round"
-              />
-            </svg>
-
-            {/* Center text */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="text-6xl font-bold text-white tracking-tight">
-                {data.strain !== null ? data.strain.toFixed(1) : '–'}
-              </div>
-              <div className="text-lg text-slate-400 font-medium">/ 21</div>
-            </div>
-          </div>
-
-          <div className="mt-6 text-center">
-            <div className="text-xs text-slate-500 mb-2">
+    <div className="space-y-2">
+      {/* Current Strain Card */}
+      <GlassCard>
+        <div className="flex flex-col gap-2">
+          {/* Header row */}
+          <div className="flex items-center justify-between">
+            <span className="font-mono font-medium text-sm text-accent">
+              Current strain
+            </span>
+            <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]">
               {formatDateForDisplay(data.date)}
-            </div>
+            </span>
           </div>
-        </div>
-      </div>
 
-      {/* Readiness Band */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-sm text-slate-500 dark:text-slate-400 mb-1 font-medium">
-              Readiness
-            </div>
-            {data.readiness ? (
-              <div className={`text-2xl font-bold ${readinessConfig.textColor}`}>
-                {readinessConfig.label}
+          {/* Strain display row */}
+          <div className="flex gap-4 items-center">
+            {/* Circular progress */}
+            <StrainCircle value={data.strain} />
+
+            {/* Value and status */}
+            <div className="flex-1 flex flex-col">
+              <span className="font-mono font-medium text-[40px] leading-none text-[#f1f1f1]">
+                {strainDisplay}
+              </span>
+              <div className="flex items-center justify-between mt-1">
+                <span className="font-mono text-xs tracking-wider-upper text-[#f1f1f1]">
+                  of 21 units
+                </span>
+                {/* Status pill */}
+                <div className="status-pill">
+                  <StatusDot color={readinessConfig.color} />
+                  <span className="font-mono text-xs tracking-wider-upper text-[#f1f1f1]">
+                    {readinessConfig.label}
+                  </span>
+                </div>
               </div>
-            ) : (
-              <div className="text-slate-400">No data</div>
-            )}
+            </div>
           </div>
-          {data.readiness && (
-            <div className={`${readinessConfig.color} w-16 h-16 rounded-full shadow-lg`} />
-          )}
         </div>
+      </GlassCard>
+
+      {/* Quick Stats Row */}
+      <div className="flex gap-2">
+        <StatCard label="Steps" value={stepsDisplay} />
+        <StatCard label="Calories" value={caloriesDisplay} />
+        <StatCard label="Workouts" value={data.workoutCount} />
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-3 gap-3">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">
-            Steps
-          </div>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
-            {data.steps !== null ? Math.round(data.steps / 1000) + 'k' : '–'}
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">
-            Calories
-          </div>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
-            {data.caloriesBurned !== null ? Math.round(data.caloriesBurned / 100) / 10 + 'k' : '–'}
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">
-            Workouts
-          </div>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
-            {data.workoutCount}
-          </div>
-        </div>
-      </div>
-
-      {/* Insights */}
+      {/* Insights Card */}
       {data.insights && data.insights.length > 0 && (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Insights</h3>
-          <div className="space-y-4">
-            {data.insights.map((insight, index) => (
-              <div key={index} className="border-l-4 border-neon-green pl-4 py-1">
-                <p className="text-sm font-medium text-slate-900 dark:text-white leading-relaxed">
-                  {insight.message}
-                </p>
-                {insight.suggestion && (
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-                    💡 {insight.suggestion}
-                  </p>
-                )}
-              </div>
-            ))}
+        <GlassCard>
+          <div className="flex flex-col gap-3">
+            <span className="font-mono font-medium text-sm text-accent">
+              Insights
+            </span>
+            <div className="flex flex-col gap-3">
+              {data.insights.map((insight, index) => (
+                <InsightRow key={index} message={insight.message} />
+              ))}
+            </div>
           </div>
-        </div>
+        </GlassCard>
       )}
     </div>
   );
