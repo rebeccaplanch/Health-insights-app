@@ -9,10 +9,49 @@ interface Spot {
   filledBoxes: Array<{ x: number; y: number; opacity: number }>;
 }
 
+interface GridLine {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  opacity: number;
+}
+
 export default function BackgroundGrid() {
   const [spots, setSpots] = useState<Spot[]>([]);
+  const [gridLines, setGridLines] = useState<GridLine[]>([]);
 
   useEffect(() => {
+    // Generate randomized grid lines
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const gridSize = 24;
+    const lines: GridLine[] = [];
+
+    // Generate vertical lines with randomized opacity
+    for (let x = 0; x <= vw; x += gridSize) {
+      lines.push({
+        x1: x,
+        y1: 0,
+        x2: x,
+        y2: vh,
+        opacity: 0.06 + Math.random() * 0.08, // 0.06 to 0.14
+      });
+    }
+
+    // Generate horizontal lines with randomized opacity
+    for (let y = 0; y <= vh; y += gridSize) {
+      lines.push({
+        x1: 0,
+        y1: y,
+        x2: vw,
+        y2: y,
+        opacity: 0.06 + Math.random() * 0.08, // 0.06 to 0.14
+      });
+    }
+
+    setGridLines(lines);
+
     // Generate random spots only on client side
     const numSpots = 8;
     const newSpots = Array.from({ length: numSpots }, () => {
@@ -26,9 +65,6 @@ export default function BackgroundGrid() {
         const angle = Math.random() * Math.PI * 2;
         const distance = Math.random() * 60; // 0-60px from center
 
-        // Calculate position in pixels (use viewport width/height)
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
         const boxX = (x * vw / 100) + Math.cos(angle) * distance;
         const boxY = (y * vh / 100) + Math.sin(angle) * distance;
 
@@ -82,21 +118,6 @@ export default function BackgroundGrid() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Base grid pattern */}
-          <pattern
-            id="grid"
-            width="24"
-            height="24"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 24 0 L 0 0 0 24"
-              fill="none"
-              stroke="rgba(255, 255, 255, 0.105)"
-              strokeWidth="1"
-            />
-          </pattern>
-
           {/* Radial gradient masks for each spotlight */}
           {spots.map((spot, index) => (
             <radialGradient
@@ -114,8 +135,18 @@ export default function BackgroundGrid() {
           ))}
         </defs>
 
-        {/* Base grid layer */}
-        <rect width="100%" height="100%" fill="url(#grid)" />
+        {/* Randomized grid lines */}
+        {gridLines.map((line, index) => (
+          <line
+            key={`line-${index}`}
+            x1={line.x1}
+            y1={line.y1}
+            x2={line.x2}
+            y2={line.y2}
+            stroke={`rgba(255, 255, 255, ${line.opacity})`}
+            strokeWidth="1"
+          />
+        ))}
 
         {/* Enhanced grid layers for each spot */}
         {spots.map((spot, index) => (
