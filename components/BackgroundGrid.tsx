@@ -1,13 +1,21 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
+
+interface Spot {
+  x: number;
+  y: number;
+  radius: number;
+  filledBoxes: Array<{ x: number; y: number; opacity: number }>;
+}
 
 export default function BackgroundGrid() {
-  // Generate random spots for grid visibility on mount
-  const spots = useMemo(() => {
-    const numSpots = 8;
+  const [spots, setSpots] = useState<Spot[]>([]);
 
-    return Array.from({ length: numSpots }, () => {
+  useEffect(() => {
+    // Generate random spots only on client side
+    const numSpots = 8;
+    const newSpots = Array.from({ length: numSpots }, () => {
       const x = 10 + Math.random() * 80; // Keep away from edges (10-90%)
       const y = 10 + Math.random() * 80;
       const radius = 80 + Math.random() * 40; // 80-120px radius
@@ -18,17 +26,19 @@ export default function BackgroundGrid() {
         const angle = Math.random() * Math.PI * 2;
         const distance = Math.random() * 60; // 0-60px from center
 
-        // Calculate position in pixels
-        const boxX = (x * window.innerWidth / 100) + Math.cos(angle) * distance;
-        const boxY = (y * window.innerHeight / 100) + Math.sin(angle) * distance;
+        // Calculate position in pixels (use viewport width/height)
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const boxX = (x * vw / 100) + Math.cos(angle) * distance;
+        const boxY = (y * vh / 100) + Math.sin(angle) * distance;
 
         // Snap to 24px grid
         const gridX = Math.floor(boxX / 24) * 24;
         const gridY = Math.floor(boxY / 24) * 24;
 
         // Calculate distance from spot center for opacity
-        const centerX = x * window.innerWidth / 100;
-        const centerY = y * window.innerHeight / 100;
+        const centerX = x * vw / 100;
+        const centerY = y * vh / 100;
         const distFromCenter = Math.sqrt(
           Math.pow(gridX - centerX, 2) + Math.pow(gridY - centerY, 2)
         );
@@ -39,6 +49,8 @@ export default function BackgroundGrid() {
 
       return { x, y, radius, filledBoxes };
     });
+
+    setSpots(newSpots);
   }, []);
 
   return (
