@@ -193,19 +193,19 @@ export function calculateReadiness(
   // Factor 6: Today's accumulated strain (dynamic context-aware adjustment)
   // As you train throughout the day, your readiness for MORE training decreases
   if (todayStrain > 15) {
-    score -= 35; // Very high strain today - need recovery
+    score -= 50; // Very high strain today - need recovery
   } else if (todayStrain > 12) {
-    score -= 25; // High strain today - limited capacity
+    score -= 35; // High strain today - limited capacity
   } else if (todayStrain > 8) {
-    score -= 15; // Moderate strain today - some capacity remains
+    score -= 20; // Moderate strain today - some capacity remains
   } else if (todayStrain > 5) {
-    score -= 5; // Light strain today - minimal impact
+    score -= 8; // Light strain today - minimal impact
   }
 
-  // Map score to band
-  if (score >= 67) {
+  // Map score to band (stricter thresholds for more realistic readiness)
+  if (score >= 70) {
     return 'green';
-  } else if (score >= 34) {
+  } else if (score >= 40) {
     return 'yellow';
   } else {
     return 'red';
