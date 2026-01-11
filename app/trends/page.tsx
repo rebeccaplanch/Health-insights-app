@@ -143,7 +143,7 @@ export default function TrendsPage() {
               className={`px-4 py-2 rounded-lg font-mono text-sm transition-all ${
                 period === days
                   ? 'bg-accent text-[#12192f]'
-                  : 'bg-[#12192f] text-[#f1f1f1]/60 hover:text-[#f1f1f1]'
+                  : 'bg-[#1a2542] text-[#f1f1f1]/60 hover:text-[#f1f1f1]'
               }`}
             >
               {days}d
@@ -191,10 +191,10 @@ export default function TrendsPage() {
                 strokeOpacity={0.4}
                 tick={{ fill: '#f1f1f1', fillOpacity: 0.4 }}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#1a2542', 
-                  border: 'none', 
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#12192f',
+                  border: 'none',
                   borderRadius: '8px',
                   fontFamily: 'var(--font-mono)'
                 }}
@@ -234,10 +234,10 @@ export default function TrendsPage() {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1a2542', 
-                      border: 'none', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#12192f',
+                      border: 'none',
                       borderRadius: '8px',
                       fontFamily: 'var(--font-mono)'
                     }}
@@ -267,10 +267,10 @@ export default function TrendsPage() {
                     strokeOpacity={0.4}
                     tick={{ fill: '#f1f1f1', fillOpacity: 0.4 }}
                   />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1a2542', 
-                      border: 'none', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#12192f',
+                      border: 'none',
                       borderRadius: '8px',
                       fontFamily: 'var(--font-mono)'
                     }}

@@ -78,7 +78,7 @@ export default function StravaConnect() {
       <div className="glass-card px-3 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#12192f] rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#1a2542] rounded-lg flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                 <path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/>
               </svg>
@@ -93,7 +93,7 @@ export default function StravaConnect() {
 
           <button
             onClick={handleConnect}
-            className="bg-[#12192f] hover:bg-[#161e38] text-accent font-mono font-medium py-2 px-6 rounded-lg transition-all"
+            className="bg-[#1a2542] hover:bg-[#1e2a4a] text-accent font-mono font-medium py-2 px-6 rounded-lg transition-all"
           >
             Connect
           </button>
@@ -124,14 +124,14 @@ export default function StravaConnect() {
           <button
             onClick={() => handleSync(2)}
             disabled={syncing}
-            className="bg-[#12192f] hover:bg-[#161e38] disabled:bg-[#12192f]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
+            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
           >
             {syncing ? 'Syncing...' : 'Sync'}
           </button>
           <button
             onClick={() => handleSync(90)}
             disabled={syncing}
-            className="bg-[#12192f] hover:bg-[#161e38] disabled:bg-[#12192f]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
+            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
           >
             {syncing ? '...' : 'Backfill'}
           </button>

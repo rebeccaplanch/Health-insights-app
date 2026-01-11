@@ -21,7 +21,7 @@ body {
   /* Glass card component matching Figma design */
   /* Heavy warped backdrop blur to abstract the grid behind cards */
   .glass-card {
-    @apply bg-[#1a2542] rounded-lg;
+    @apply bg-[#12192f] rounded-lg;
   }
 
   /* Status pill (Ready, Moderate, etc.) */

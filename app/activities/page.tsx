@@ -210,7 +210,7 @@ export default function ActivitiesPage() {
 
                       {/* Stats Grid */}
                       <div className="grid grid-cols-3 gap-2 mb-3">
-                        <div className="bg-[#12192f] rounded-lg p-3">
+                        <div className="bg-[#1a2542] rounded-lg p-3">
                           <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
                             Duration
                           </p>
@@ -220,7 +220,7 @@ export default function ActivitiesPage() {
                         </div>
 
                         {workout.distance && (
-                          <div className="bg-[#12192f] rounded-lg p-3">
+                          <div className="bg-[#1a2542] rounded-lg p-3">
                             <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
                               Distance
                             </p>
@@ -231,7 +231,7 @@ export default function ActivitiesPage() {
                         )}
 
                         {workout.averageHeartrate && (
-                          <div className="bg-[#12192f] rounded-lg p-3">
+                          <div className="bg-[#1a2542] rounded-lg p-3">
                             <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
                               Avg HR
                             </p>
@@ -244,7 +244,7 @@ export default function ActivitiesPage() {
 
                       {/* Notes */}
                       {workout.description && (
-                        <div className="bg-[#12192f] rounded-lg p-3">
+                        <div className="bg-[#1a2542] rounded-lg p-3">
                           <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
                             Notes
                           </p>
@@ -266,7 +266,7 @@ export default function ActivitiesPage() {
                           onChange={(e) =>
                             setEditForm({ ...editForm, customType: e.target.value })
                           }
-                          className="w-full px-4 py-3 bg-[#12192f] border border-[#6E81B7]/30 rounded-lg text-[#f1f1f1] font-mono focus:outline-none focus:border-accent"
+                          className="w-full px-4 py-3 bg-[#1a2542] border border-[#6E81B7]/30 rounded-lg text-[#f1f1f1] font-mono focus:outline-none focus:border-accent"
                         >
                           {WORKOUT_TYPES.map((type) => (
                             <option key={type} value={type}>
@@ -286,7 +286,7 @@ export default function ActivitiesPage() {
                             setEditForm({ ...editForm, description: e.target.value })
                           }
                           placeholder="Add notes about this workout..."
-                          className="w-full px-4 py-3 bg-[#12192f] border border-[#6E81B7]/30 rounded-lg text-[#f1f1f1] font-mono focus:outline-none focus:border-accent resize-none placeholder:text-[#f1f1f1]/30"
+                          className="w-full px-4 py-3 bg-[#1a2542] border border-[#6E81B7]/30 rounded-lg text-[#f1f1f1] font-mono focus:outline-none focus:border-accent resize-none placeholder:text-[#f1f1f1]/30"
                           rows={3}
                         />
                       </div>
@@ -302,7 +302,7 @@ export default function ActivitiesPage() {
                         <button
                           onClick={() => handleSave(workout.id)}
                           disabled={saving}
-                          className="px-4 py-2 bg-[#12192f] hover:bg-[#161e38] disabled:bg-[#f1f1f1]/20 text-accent font-mono text-sm rounded-lg transition-all"
+                          className="px-4 py-2 bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#f1f1f1]/20 text-accent font-mono text-sm rounded-lg transition-all"
                         >
                           {saving ? 'Saving...' : 'Save'}
                         </button>

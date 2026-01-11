@@ -67,7 +67,7 @@ export default function AIDataPage() {
         {/* Instructions Card */}
         <div className="glass-card p-4">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 bg-[#12192f] rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 bg-[#1a2542] rounded-lg flex items-center justify-center flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#7fd8be">
                 <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/>
               </svg>
@@ -106,7 +106,7 @@ export default function AIDataPage() {
             className={`flex-1 py-3 px-4 rounded-lg font-mono text-sm transition-all ${
               copied
                 ? 'bg-accent text-[#12192f]'
-                : 'bg-[#12192f] hover:bg-[#161e38] text-accent disabled:text-[#f1f1f1]/30 disabled:bg-[#f1f1f1]/10'
+                : 'bg-[#1a2542] hover:bg-[#1e2a4a] text-accent disabled:text-[#f1f1f1]/30 disabled:bg-[#f1f1f1]/10'
             }`}
           >
             {copied ? '✓ Copied!' : 'Copy Data'}
@@ -137,7 +137,7 @@ export default function AIDataPage() {
           )}
 
           {!loading && !error && data && (
-            <div className="bg-[#12192f] rounded-lg p-4 overflow-auto max-h-[400px]">
+            <div className="bg-[#1a2542] rounded-lg p-4 overflow-auto max-h-[400px]">
               <pre className="text-xs font-mono text-[#f1f1f1]/80 whitespace-pre-wrap">
                 {data}
               </pre>

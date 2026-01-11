@@ -96,7 +96,7 @@ function NumberInput({
         )}
       </div>
       {!disabled && (
-        <div className="flex flex-col -space-y-4">
+        <div className="hidden md:flex flex-col -space-y-4">
           <button
             type="button"
             onClick={increment}
@@ -227,8 +227,8 @@ export default function DailyCheckin() {
           {/* Steps */}
           <div className={`p-3 rounded-lg transition-all ${
             isEditing
-              ? 'bg-white/5'
-              : 'bg-white/[0.02]'
+              ? 'bg-[#1a2542]'
+              : 'bg-[#1a2542]/50'
           }`}>
             <label htmlFor="steps" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-2">
               Steps
@@ -245,8 +245,8 @@ export default function DailyCheckin() {
           {/* Calories */}
           <div className={`p-3 rounded-lg transition-all ${
             isEditing
-              ? 'bg-white/5'
-              : 'bg-white/[0.02]'
+              ? 'bg-[#1a2542]'
+              : 'bg-[#1a2542]/50'
           }`}>
             <label htmlFor="calories" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-2">
               Calories
@@ -263,8 +263,8 @@ export default function DailyCheckin() {
           {/* Sleep Score */}
           <div className={`p-3 rounded-lg transition-all ${
             isEditing
-              ? 'bg-white/5'
-              : 'bg-white/[0.02]'
+              ? 'bg-[#1a2542]'
+              : 'bg-[#1a2542]/50'
           }`}>
             <label htmlFor="sleepScore" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-2">
               Sleep
@@ -286,7 +286,7 @@ export default function DailyCheckin() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-[#12192f] hover:bg-[#161e38] disabled:bg-[#12192f]/50 text-accent font-mono font-medium py-2 px-6 rounded-lg transition-all"
+              className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-6 rounded-lg transition-all"
             >
               {loading ? 'Saving...' : 'Save'}
             </button>
