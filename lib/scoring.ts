@@ -319,21 +319,39 @@ export function generateInsights(
       suggestion: 'Consider moderate intensity training'
     });
   } else if (readiness === 'green') {
-    const avgStrain = sevenDayStrains.length > 0
-      ? sevenDayStrains.reduce((a, b) => a + b, 0) / sevenDayStrains.length
-      : 0;
-    if (avgStrain < 8) {
+    // Context-aware message based on whether the day had high activity or not
+    if (strain > 15) {
+      // High readiness + high strain = you were recovered and trained hard
       insights.push({
         type: 'readiness',
-        message: 'High readiness - well-recovered with low recent load',
-        suggestion: 'Ready for intense training'
+        message: 'Started well-recovered - high training load completed',
+        suggestion: 'Focus on recovery for tomorrow'
+      });
+    } else if (strain > 10) {
+      // High readiness + moderate strain = good training session
+      insights.push({
+        type: 'readiness',
+        message: 'Good recovery status - solid training session completed',
+        suggestion: 'Continue balanced training and recovery'
       });
     } else {
-      insights.push({
-        type: 'readiness',
-        message: 'High readiness - recovered and ready to train',
-        suggestion: 'Can handle high-intensity work'
-      });
+      // High readiness + low strain = ready for more
+      const avgStrain = sevenDayStrains.length > 0
+        ? sevenDayStrains.reduce((a, b) => a + b, 0) / sevenDayStrains.length
+        : 0;
+      if (avgStrain < 8) {
+        insights.push({
+          type: 'readiness',
+          message: 'High readiness - well-recovered with low recent load',
+          suggestion: 'Ready for intense training'
+        });
+      } else {
+        insights.push({
+          type: 'readiness',
+          message: 'High readiness - recovered and ready to train',
+          suggestion: 'Can handle high-intensity work'
+        });
+      }
     }
   }
 
