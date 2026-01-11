@@ -123,14 +123,15 @@ export function calculateStrain(
 
 /**
  * Calculate readiness band
- * Based on yesterday's strain, rolling averages, trends, and sleep quality
+ * Based on yesterday's strain, rolling averages, trends, sleep quality, and current day's strain
  */
 export function calculateReadiness(
   yesterdayStrain: number | null,
   sevenDayStrains: number[], // Last 7 days of strain scores
   todayCalories: number | null,
   sevenDayCalories: number[], // Last 7 days of calories
-  sleepScore: number | null // Garmin sleep score (0-100)
+  sleepScore: number | null, // Garmin sleep score (0-100)
+  todayStrain: number = 0 // Current day's accumulated strain (dynamic)
 ): ReadinessBand {
   let score = 100; // Start at 100, deduct points for risk factors
 
@@ -187,6 +188,18 @@ export function calculateReadiness(
       // Poor sleep: significant penalty
       score -= 25;
     }
+  }
+
+  // Factor 6: Today's accumulated strain (dynamic context-aware adjustment)
+  // As you train throughout the day, your readiness for MORE training decreases
+  if (todayStrain > 15) {
+    score -= 35; // Very high strain today - need recovery
+  } else if (todayStrain > 12) {
+    score -= 25; // High strain today - limited capacity
+  } else if (todayStrain > 8) {
+    score -= 15; // Moderate strain today - some capacity remains
+  } else if (todayStrain > 5) {
+    score -= 5; // Light strain today - minimal impact
   }
 
   // Map score to band
@@ -377,7 +390,8 @@ export function calculateDailyScores(
     sevenDayStrains,
     caloriesBurned,
     sevenDayCalories,
-    sleepScore
+    sleepScore,
+    strain // Pass today's strain for dynamic readiness
   );
   const insights = generateInsights(
     strain,
