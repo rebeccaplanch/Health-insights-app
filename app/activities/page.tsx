@@ -71,7 +71,31 @@ export default function ActivitiesPage() {
           setWorkouts(data);
         }
       } else {
-        // Mock data for dev environment when API is not available
+        // Only use mock data in development (localhost)
+        if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+          const mockWorkout: Workout = {
+            id: 1,
+            type: 'Run',
+            customType: null,
+            name: 'Morning Run',
+            description: null,
+            date: new Date().toISOString().split('T')[0],
+            startDateLocal: new Date().toISOString(),
+            duration: 2700, // 45 minutes in seconds
+            distance: 8000, // 8km in meters
+            elevation: 120,
+            averageHeartrate: 145,
+            calories: 450,
+          };
+          setWorkouts([mockWorkout]);
+        } else {
+          setWorkouts([]);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching workouts:', error);
+      // Only use mock data in development (localhost)
+      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
         const mockWorkout: Workout = {
           id: 1,
           type: 'Run',
@@ -84,26 +108,12 @@ export default function ActivitiesPage() {
           distance: 8000, // 8km in meters
           elevation: 120,
           averageHeartrate: 145,
+          calories: 450,
         };
         setWorkouts([mockWorkout]);
+      } else {
+        setWorkouts([]);
       }
-    } catch (error) {
-      console.error('Error fetching workouts:', error);
-      // Mock data for dev environment if API fails
-      const mockWorkout: Workout = {
-        id: 1,
-        type: 'Run',
-        customType: null,
-        name: 'Morning Run',
-        description: null,
-        date: new Date().toISOString().split('T')[0],
-        startDateLocal: new Date().toISOString(),
-        duration: 2700, // 45 minutes in seconds
-        distance: 8000, // 8km in meters
-        elevation: 120,
-        averageHeartrate: 145,
-      };
-      setWorkouts([mockWorkout]);
     } finally {
       setLoading(false);
     }
