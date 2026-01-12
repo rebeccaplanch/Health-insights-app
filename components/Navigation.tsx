@@ -43,7 +43,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="bg-[#1a2542] rounded-lg">
+    <nav className="bg-[var(--card-bg-0)] rounded-none md:rounded-lg">
       {/* Mobile: Bottom bar layout */}
       <div className="md:hidden flex justify-around items-center py-3 px-4 safe-area-pb">
         {navItems.map((item) => {

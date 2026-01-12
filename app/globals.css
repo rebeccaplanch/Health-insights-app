@@ -18,18 +18,6 @@ body {
   min-height: 100vh;
 }
 
-/* Ensure minimum font size of 10px on mobile */
-/* All Tailwind text classes already meet this requirement:
-   - text-[10px] = 10px
-   - text-xs = 12px (0.75rem)
-   - text-sm = 14px (0.875rem)
-   This rule ensures the base font size supports these minimums */
-@media (max-width: 767px) {
-  html {
-    font-size: 16px; /* Standard base ensures rem/em units work correctly */
-  }
-}
-
 @layer components {
   /* Base card component - solid background cards against the background */
   .card {

@@ -10,7 +10,8 @@ interface SyncStatus {
 
 export default function StravaConnect() {
   const [status, setStatus] = useState<SyncStatus | null>(null);
-  const [syncing, setSyncing] = useState(false);
+  const [syncingSync, setSyncingSync] = useState(false);
+  const [syncingBackfill, setSyncingBackfill] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -38,8 +39,12 @@ export default function StravaConnect() {
     window.location.href = '/api/strava/auth/start';
   };
 
-  const handleSync = async (backfillDays?: number) => {
-    setSyncing(true);
+  const handleSync = async (backfillDays?: number, isBackfill: boolean = false) => {
+    if (isBackfill) {
+      setSyncingBackfill(true);
+    } else {
+      setSyncingSync(true);
+    }
     setMessage('');
 
     try {
@@ -65,7 +70,11 @@ export default function StravaConnect() {
       console.error('Error syncing:', error);
       setMessage('✗ Sync failed');
     } finally {
-      setSyncing(false);
+      if (isBackfill) {
+        setSyncingBackfill(false);
+      } else {
+        setSyncingSync(false);
+      }
     }
   };
 
@@ -104,38 +113,37 @@ export default function StravaConnect() {
 
   return (
     <div className="card px-3 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-mono font-medium text-sm text-accent">Strava Connected</h3>
-            <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60">
-              {status.workoutCount} workouts synced
-              {status.lastSync && ` · ${new Date(status.lastSync).toLocaleDateString()}`}
-            </p>
-          </div>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+            <path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+          </svg>
         </div>
+        <div>
+          <h3 className="font-mono font-medium text-sm text-accent">Strava Connected</h3>
+        </div>
+      </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => handleSync(2)}
-            disabled={syncing}
-            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
-          >
-            {syncing ? 'Syncing...' : 'Sync'}
-          </button>
-          <button
-            onClick={() => handleSync(90)}
-            disabled={syncing}
-            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
-          >
-            {syncing ? '...' : 'Backfill'}
-          </button>
-        </div>
+      <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-4">
+        {status.workoutCount} workouts synced
+        {status.lastSync && ` · ${new Date(status.lastSync).toLocaleDateString()}`}
+      </p>
+
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => handleSync(2, false)}
+          disabled={syncingSync || syncingBackfill}
+          className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
+        >
+          {syncingSync ? 'Syncing...' : 'Sync'}
+        </button>
+        <button
+          onClick={() => handleSync(90, true)}
+          disabled={syncingSync || syncingBackfill}
+          className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
+        >
+          {syncingBackfill ? '...' : 'Backfill'}
+        </button>
       </div>
 
       {message && (
