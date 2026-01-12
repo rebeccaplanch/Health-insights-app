@@ -81,7 +81,7 @@ export default function TrendsPage() {
             </h1>
           </div>
 
-          <div className="glass-card p-8 text-center">
+          <div className="card p-8 text-center">
             <p className="text-[#f1f1f1]/60 font-mono">Loading trends...</p>
           </div>
         </div>
@@ -153,26 +153,26 @@ export default function TrendsPage() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="glass-card p-4">
+          <div className="card p-4">
             <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Avg Strain</p>
             <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.avgStrain}</p>
           </div>
-          <div className="glass-card p-4">
+          <div className="card p-4">
             <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Workouts</p>
             <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.totalWorkouts}</p>
           </div>
-          <div className="glass-card p-4">
+          <div className="card p-4">
             <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Avg Steps</p>
             <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.avgSteps.toLocaleString()}</p>
           </div>
-          <div className="glass-card p-4">
+          <div className="card p-4">
             <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">Active Days</p>
             <p className="font-mono text-2xl text-[#f1f1f1]">{data.summary.activeDays}</p>
           </div>
         </div>
 
         {/* Strain Trend Chart */}
-        <div className="glass-card p-4">
+        <div className="card p-4">
           <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Strain Trend</h2>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={strainChartData}>
@@ -215,7 +215,7 @@ export default function TrendsPage() {
         <div className="grid md:grid-cols-2 gap-4">
           {/* Activity Types */}
           {activityTypeData.length > 0 && (
-            <div className="glass-card p-4">
+            <div className="card p-4">
               <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Activity Types</h2>
               <ResponsiveContainer width="100%" height={180}>
                 <PieChart>
@@ -249,7 +249,7 @@ export default function TrendsPage() {
 
           {/* Readiness Distribution */}
           {readinessData.length > 0 && (
-            <div className="glass-card p-4">
+            <div className="card p-4">
               <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Readiness</h2>
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart data={readinessData}>
@@ -287,7 +287,7 @@ export default function TrendsPage() {
         </div>
 
         {/* Personal Bests */}
-        <div className="glass-card p-4">
+        <div className="card p-4">
           <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">
             Personal Bests <span className="text-accent">({period}d)</span>
           </h2>
@@ -308,7 +308,7 @@ export default function TrendsPage() {
         </div>
 
         {/* Training Insights */}
-        <div className="glass-card p-4">
+        <div className="card p-4">
           <h2 className="font-mono text-sm text-[#f1f1f1]/60 uppercase tracking-wider mb-4">Insights</h2>
           <div className="space-y-3">
             {data.summary.avgStrain > 12 && (

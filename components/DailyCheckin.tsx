@@ -198,7 +198,7 @@ export default function DailyCheckin() {
   };
 
   return (
-    <div className="glass-card px-3 py-4 relative">
+    <div className="card px-3 py-4 relative">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h2 className="font-mono font-medium text-sm text-accent">Daily Check-in</h2>

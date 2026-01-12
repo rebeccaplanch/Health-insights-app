@@ -8,6 +8,7 @@
   --accent-mint: #7fd8be;
   --card-bg-start: rgba(255, 255, 255, 0.05);
   --card-bg-end: rgba(255, 255, 255, 0.03);
+  --card-bg-0: #12192f;
   --status-bg: #12192f;
 }
 
@@ -17,11 +18,23 @@ body {
   min-height: 100vh;
 }
 
+/* Ensure minimum font size of 10px on mobile */
+/* All Tailwind text classes already meet this requirement:
+   - text-[10px] = 10px
+   - text-xs = 12px (0.75rem)
+   - text-sm = 14px (0.875rem)
+   This rule ensures the base font size supports these minimums */
+@media (max-width: 767px) {
+  html {
+    font-size: 16px; /* Standard base ensures rem/em units work correctly */
+  }
+}
+
 @layer components {
-  /* Glass card component matching Figma design */
-  /* Heavy warped backdrop blur to abstract the grid behind cards */
-  .glass-card {
-    @apply bg-[#12192f] rounded-lg;
+  /* Base card component - solid background cards against the background */
+  .card {
+    background-color: var(--card-bg-0);
+    @apply rounded-lg;
   }
 
   /* Status pill (Ready, Moderate, etc.) */

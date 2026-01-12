@@ -110,7 +110,7 @@ export default function ActivitiesPage() {
             </h1>
           </div>
 
-          <div className="glass-card p-8 text-center">
+          <div className="card p-8 text-center">
             <p className="text-[#f1f1f1]/60 font-mono">Loading activities...</p>
           </div>
         </div>
@@ -147,7 +147,7 @@ export default function ActivitiesPage() {
 
         {/* Workouts List */}
         {workouts.length === 0 ? (
-          <div className="glass-card p-8 text-center">
+          <div className="card p-8 text-center">
             <p className="text-[#f1f1f1]/60 font-mono mb-2">No activities yet</p>
             <p className="text-[#f1f1f1]/40 text-sm">
               Connect Strava to sync your workouts
@@ -161,7 +161,7 @@ export default function ActivitiesPage() {
               const durationMins = Math.round(workout.duration / 60);
 
               return (
-                <div key={workout.id} className="glass-card p-4">
+                <div key={workout.id} className="card p-4">
                   {!isEditing ? (
                     <>
                       {/* Header Row */}

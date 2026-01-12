@@ -75,9 +75,9 @@ function StatusDot({ color = '#7fd8be' }: { color?: string }) {
 }
 
 /**
- * Glass card wrapper component
+ * Card wrapper component
  */
-function GlassCard({ 
+function Card({ 
   children, 
   className = '' 
 }: { 
@@ -85,7 +85,7 @@ function GlassCard({
   className?: string;
 }) {
   return (
-    <div className={`glass-card px-3 py-4 ${className}`}>
+    <div className={`card px-3 py-4 ${className}`}>
       {children}
     </div>
   );
@@ -102,7 +102,7 @@ function StatCard({
   value: string | number;
 }) {
   return (
-    <GlassCard className="flex-1">
+    <Card className="flex-1">
       <div className="flex flex-col gap-2">
         <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]">
           {label}
@@ -111,7 +111,7 @@ function StatCard({
           {value}
         </span>
       </div>
-    </GlassCard>
+    </Card>
   );
 }
 
@@ -238,7 +238,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-2">
       {/* Current Strain Card */}
-      <GlassCard>
+      <Card>
         <div className="flex flex-col gap-2">
           {/* Header row */}
           <div className="flex items-center justify-between">
@@ -275,7 +275,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      </GlassCard>
+      </Card>
 
       {/* Quick Stats Row */}
       <div className="flex gap-2">
@@ -286,7 +286,7 @@ export default function Dashboard() {
 
       {/* Insights Card */}
       {data.insights && data.insights.length > 0 && (
-        <GlassCard>
+        <Card>
           <div className="flex flex-col gap-3">
             <span className="font-mono font-medium text-sm text-accent">
               Insights
@@ -297,7 +297,7 @@ export default function Dashboard() {
               ))}
             </div>
           </div>
-        </GlassCard>
+        </Card>
       )}
     </div>
   );

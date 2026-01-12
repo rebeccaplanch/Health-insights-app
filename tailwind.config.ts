@@ -28,6 +28,7 @@ const config: Config = {
         // Card and UI colors
         card: {
           bg: 'rgba(255, 255, 255, 0.05)',
+          'bg-0': 'var(--card-bg-0)',
           border: 'rgba(255, 255, 255, 0.1)',
         },
         // Status colors

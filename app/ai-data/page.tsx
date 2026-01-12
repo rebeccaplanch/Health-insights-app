@@ -65,7 +65,7 @@ export default function AIDataPage() {
         </div>
 
         {/* Instructions Card */}
-        <div className="glass-card p-4">
+        <div className="card p-4">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 bg-[#1a2542] rounded-lg flex items-center justify-center flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#7fd8be">
@@ -123,7 +123,7 @@ export default function AIDataPage() {
         </div>
 
         {/* Data Display */}
-        <div className="glass-card p-4">
+        <div className="card p-4">
           {loading && (
             <div className="text-center py-8">
               <p className="text-[#f1f1f1]/60 font-mono">Loading data...</p>
