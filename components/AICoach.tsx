@@ -50,11 +50,11 @@ export default function AICoach() {
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h2 className="text-2xl font-bold text-[#f2f0e3] flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-[var(--foreground)] flex items-center gap-2">
               <span className="text-2xl">🤖</span>
               AI Coach
             </h2>
-            <p className="text-[#f2f0e3]/90 text-sm mt-1 font-medium">
+            <p className="text-[#e6e6e6] text-sm mt-1 font-medium">
               Personalized insights from your training data
             </p>
           </div>
@@ -62,7 +62,7 @@ export default function AICoach() {
             <div className="flex gap-2">
               <button
                 onClick={handleEditInsights}
-                className="p-2 text-[#f2f0e3]/80 hover:text-[#f2f0e3] hover:bg-[#f2f0e3]/20 transition-all rounded-lg"
+                className="p-2 text-[#cccccc] hover:text-[var(--foreground)] hover:bg-[#333333] transition-all rounded-lg"
                 title="Update insights"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -71,7 +71,7 @@ export default function AICoach() {
               </button>
               <button
                 onClick={handleClearInsights}
-                className="p-2 text-[#f2f0e3]/80 hover:text-[#f2f0e3] hover:bg-[#f2f0e3]/20 transition-all rounded-lg"
+                className="p-2 text-[#cccccc] hover:text-[var(--foreground)] hover:bg-[#333333] transition-all rounded-lg"
                 title="Clear insights"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -85,7 +85,7 @@ export default function AICoach() {
         {!insights && !showPrompt && (
           <button
             onClick={handleGetInsights}
-            className="w-full bg-[#f2f0e3] hover:bg-[#f2f0e3]/95 text-purple-600 font-bold py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl"
+            className="w-full bg-[var(--foreground)] hover:bg-[#d4cec5] text-purple-600 font-bold py-4 px-6 rounded-2xl transition-all shadow-lg hover:shadow-xl"
           >
             Get AI Insights
           </button>
@@ -94,10 +94,10 @@ export default function AICoach() {
         {showPrompt && !insights && (
           <div className="space-y-4">
             <div className="bg-[#f2f0e3]/20 backdrop-blur-sm border border-[#f2f0e3]/30 rounded-2xl p-4">
-              <p className="text-sm font-semibold text-[#f2f0e3] mb-2">
+              <p className="text-sm font-semibold text-[var(--foreground)] mb-2">
                 📊 How to get AI insights:
               </p>
-              <ol className="text-sm text-[#f2f0e3]/95 space-y-2 list-decimal list-inside">
+              <ol className="text-sm text-[#f2f2f2] space-y-2 list-decimal list-inside">
                 <li>Go to the "🤖 AI Data" tab</li>
                 <li>Click "Copy Data"</li>
                 <li>Come back to Claude Code chat</li>
@@ -106,14 +106,14 @@ export default function AICoach() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-[#f2f0e3] mb-2">
+              <label className="block text-sm font-bold text-[var(--foreground)] mb-2">
                 Paste AI insights below:
               </label>
               <textarea
                 value={tempInsights}
                 onChange={(e) => setTempInsights(e.target.value)}
                 placeholder="Paste the insights from Claude Code here..."
-                className="w-full px-4 py-3 bg-[#f2f0e3]/95 border-2 border-[#f2f0e3]/50 rounded-2xl focus:ring-2 focus:ring-[#f2f0e3] focus:border-[#f2f0e3] text-slate-900 placeholder:text-slate-400 font-mono text-sm"
+                className="w-full px-4 py-3 bg-[#d4cec5] border-2 border-[#b8b2a9] rounded-2xl focus:ring-2 focus:ring-[var(--foreground)] focus:border-[var(--foreground)] text-slate-900 placeholder:text-slate-400 font-mono text-sm"
                 rows={12}
               />
             </div>
@@ -122,7 +122,7 @@ export default function AICoach() {
               <button
                 onClick={handleSaveInsights}
                 disabled={!tempInsights.trim()}
-                className="flex-1 bg-[#f2f0e3] hover:bg-[#f2f0e3]/95 disabled:bg-[#f2f0e3]/50 text-purple-600 font-bold py-3 px-4 rounded-xl transition-all"
+                className="flex-1 bg-[var(--foreground)] hover:bg-[#d4cec5] disabled:bg-[#b8b2a9] text-purple-600 font-bold py-3 px-4 rounded-xl transition-all"
               >
                 Save Insights
               </button>
@@ -132,7 +132,7 @@ export default function AICoach() {
                   setIsEditing(false);
                   setTempInsights('');
                 }}
-                className="px-4 py-3 text-[#f2f0e3]/90 hover:text-[#f2f0e3] hover:bg-[#f2f0e3]/20 font-semibold rounded-xl transition-all"
+                className="px-4 py-3 text-[#e6e6e6] hover:text-[var(--foreground)] hover:bg-[#333333] font-semibold rounded-xl transition-all"
               >
                 Cancel
               </button>
@@ -143,16 +143,16 @@ export default function AICoach() {
         {showPrompt && insights && isEditing && (
           <div className="space-y-4">
             <div className="bg-[#f2f0e3]/20 backdrop-blur-sm border border-[#f2f0e3]/30 rounded-2xl p-4">
-              <p className="text-sm font-semibold text-[#f2f0e3] mb-2">
+              <p className="text-sm font-semibold text-[var(--foreground)] mb-2">
                 Get fresh insights!
               </p>
-              <p className="text-sm text-[#f2f0e3]/95">
+              <p className="text-sm text-[#f2f2f2]">
                 Go to AI Data tab → Copy → Tell Claude Code: "Analyze my training data"
               </p>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-[#f2f0e3] mb-2">
+              <label className="block text-sm font-bold text-[var(--foreground)] mb-2">
                 Update insights:
               </label>
               <textarea
@@ -167,7 +167,7 @@ export default function AICoach() {
               <button
                 onClick={handleSaveInsights}
                 disabled={!tempInsights.trim()}
-                className="flex-1 bg-[#f2f0e3] hover:bg-[#f2f0e3]/95 disabled:bg-[#f2f0e3]/50 text-purple-600 font-bold py-3 px-4 rounded-xl transition-all"
+                className="flex-1 bg-[var(--foreground)] hover:bg-[#d4cec5] disabled:bg-[#b8b2a9] text-purple-600 font-bold py-3 px-4 rounded-xl transition-all"
               >
                 Save Insights
               </button>
@@ -177,7 +177,7 @@ export default function AICoach() {
                   setShowPrompt(false);
                   setTempInsights('');
                 }}
-                className="px-4 py-3 text-[#f2f0e3]/90 hover:text-[#f2f0e3] hover:bg-[#f2f0e3]/20 font-semibold rounded-xl transition-all"
+                className="px-4 py-3 text-[#e6e6e6] hover:text-[var(--foreground)] hover:bg-[#333333] font-semibold rounded-xl transition-all"
               >
                 Cancel
               </button>

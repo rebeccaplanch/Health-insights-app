@@ -261,7 +261,7 @@ const CLUSTER_PLACEMENTS: ClusterConfig[] = [
  * Sparkle/Diamond positions - distributed around the card area
  */
 const SPARKLE_PLACEMENTS = [
-  { relX: 0.08, relY: 0.18 },   // Top-left
+  { relX: 0.08, relY: 0.22 },   // Top-left (moved down one vertex)
   { relX: 0.92, relY: 0.35 },   // Right side
 ];
 

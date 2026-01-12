@@ -59,42 +59,40 @@ export default function AIDataPage() {
           <p className="font-mono italic text-sm text-accent mb-1">
             AI Analysis
           </p>
-          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[var(--foreground)]">
             INSIGHTS
           </h1>
         </div>
 
         {/* Instructions Card */}
         <div className="card p-4">
-          <div className="flex items-start gap-3">
-            <div className="w-8 h-8 bg-[#1a2542] rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#7fd8be">
-                <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/>
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-mono text-sm text-[#f2f0e3] mb-2">
+          <div className="flex flex-col gap-3">
+            {/* Header with icon - left aligned */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#6E81B7">
+                  <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                </svg>
+              </div>
+              <h3 className="font-mono text-sm text-[var(--foreground)]">
                 How to get AI insights
               </h3>
-              <ol className="text-xs text-[#f2f0e3]/60 space-y-1.5">
-                <li className="flex items-start gap-2">
-                  <span className="text-accent font-mono">1.</span>
-                  <span>Click "Copy Data" below</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-accent font-mono">2.</span>
-                  <span>Go to your Claude Code chat</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-accent font-mono">3.</span>
-                  <span>Type "Analyze my training data" and paste</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-accent font-mono">4.</span>
-                  <span>Get personalized insights</span>
-                </li>
-              </ol>
             </div>
+            {/* Numbered list - hanging indent, text aligns with header */}
+            <ol 
+              className="text-xs text-[#999999] space-y-1.5 ai-insights-list" 
+              style={{ 
+                listStyleType: 'decimal',
+                listStylePosition: 'outside', 
+                padding: 0, 
+                paddingLeft: '36px',
+              }}
+            >
+              <li>Click "Copy Data" below</li>
+              <li>Go to your Claude Code chat</li>
+              <li>Type "Analyze my training data" and paste</li>
+              <li>Get personalized insights</li>
+            </ol>
           </div>
         </div>
 
@@ -106,7 +104,7 @@ export default function AIDataPage() {
             className={`flex-1 py-3 px-4 rounded-lg font-mono text-sm transition-all ${
               copied
                 ? 'bg-accent text-[#12192f]'
-                : 'bg-[#1a2542] hover:bg-[#1e2a4a] text-accent disabled:text-[#f2f0e3]/30 disabled:bg-[#f2f0e3]/10'
+                : 'bg-[var(--status-bg)] hover:bg-[#0f1219] text-[#6E81B7] disabled:text-[#4d4d4d] disabled:bg-[#1a1a1a]'
             }`}
           >
             {copied ? '✓ Copied!' : 'Copy Data'}
@@ -114,9 +112,9 @@ export default function AIDataPage() {
           <button
             onClick={fetchData}
             disabled={loading}
-            className="py-3 px-4 bg-[#f2f0e3]/10 hover:bg-[#f2f0e3]/15 disabled:bg-[#f2f0e3]/5 text-[#f2f0e3] font-mono text-sm rounded-lg transition-all"
+            className="py-3 px-4 bg-[var(--status-bg)] hover:bg-[#0f1219] disabled:bg-[#0d0d0d] text-[#6E81B7] font-mono text-sm rounded-lg transition-all"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor" className={loading ? 'animate-spin' : ''}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#6E81B7" className={loading ? 'animate-spin' : ''}>
               <path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/>
             </svg>
           </button>
@@ -126,7 +124,7 @@ export default function AIDataPage() {
         <div className="card p-4">
           {loading && (
             <div className="text-center py-8">
-              <p className="text-[#f2f0e3]/60 font-mono">Loading data...</p>
+              <p className="text-[#999999] font-mono">Loading data...</p>
             </div>
           )}
 
@@ -138,7 +136,7 @@ export default function AIDataPage() {
 
           {!loading && !error && data && (
             <div className="bg-[#1a2542] rounded-lg p-4 overflow-auto max-h-[400px]">
-              <pre className="text-xs font-mono text-[#f2f0e3]/80 whitespace-pre-wrap">
+              <pre className="text-xs font-mono text-[#cccccc] whitespace-pre-wrap">
                 {data}
               </pre>
             </div>
@@ -146,8 +144,8 @@ export default function AIDataPage() {
 
           {!loading && !error && !data && (
             <div className="text-center py-8">
-              <p className="text-[#f2f0e3]/60 font-mono mb-2">No data available</p>
-              <p className="text-[#f2f0e3]/40 text-sm">
+              <p className="text-[#999999] font-mono mb-2">No data available</p>
+              <p className="text-[#999999] text-sm">
                 Start logging your daily check-ins!
               </p>
             </div>

@@ -19,6 +19,7 @@ export interface StravaActivity {
   distance: number; // meters
   total_elevation_gain: number; // meters
   average_heartrate?: number; // bpm
+  kilojoules?: number; // energy in kilojoules (convert to calories)
 }
 
 /**

@@ -76,13 +76,13 @@ export default function TrendsPage() {
             <p className="font-mono italic text-sm text-accent mb-1">
               Analytics
             </p>
-            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
+            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[var(--foreground)]">
               TRENDS
             </h1>
           </div>
 
           <div className="card p-8 text-center">
-            <p className="text-[#f2f0e3]/60 font-mono">Loading trends...</p>
+            <p className="text-[#999999] font-mono">Loading trends...</p>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ export default function TrendsPage() {
           <p className="font-mono italic text-sm text-accent mb-1">
             Analytics
           </p>
-          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[var(--foreground)]">
             TRENDS
           </h1>
         </div>
@@ -143,7 +143,7 @@ export default function TrendsPage() {
               className={`px-4 py-2 rounded-lg font-mono text-sm transition-all ${
                 period === days
                   ? 'bg-[var(--card-bg-0)] text-accent font-medium underline decoration-accent underline-offset-[4px]'
-                  : 'bg-[var(--card-bg-0)] text-[#f2f0e3]/60 hover:text-[#f2f0e3]'
+                  : 'bg-[var(--card-bg-0)] text-[#999999] hover:text-[var(--foreground)]'
               }`}
             >
               {days}d
@@ -154,42 +154,40 @@ export default function TrendsPage() {
         {/* Summary Cards */}
         <div className="grid grid-cols-2 gap-3">
           <div className="card p-4">
-            <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">Avg Strain</p>
-            <p className="font-mono text-2xl text-[#f2f0e3]">{data.summary.avgStrain}</p>
+            <p className="font-mono text-[10px] md:text-xs text-[#999999] uppercase tracking-wider mb-1">Avg Strain</p>
+            <p className="font-mono text-2xl text-[var(--foreground)]">{data.summary.avgStrain}</p>
           </div>
           <div className="card p-4">
-            <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">Workouts</p>
-            <p className="font-mono text-2xl text-[#f2f0e3]">{data.summary.totalWorkouts}</p>
+            <p className="font-mono text-[10px] md:text-xs text-[#999999] uppercase tracking-wider mb-1">Workouts</p>
+            <p className="font-mono text-2xl text-[var(--foreground)]">{data.summary.totalWorkouts}</p>
           </div>
           <div className="card p-4">
-            <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">Avg Steps</p>
-            <p className="font-mono text-2xl text-[#f2f0e3]">{data.summary.avgSteps.toLocaleString()}</p>
+            <p className="font-mono text-[10px] md:text-xs text-[#999999] uppercase tracking-wider mb-1">Avg Steps</p>
+            <p className="font-mono text-2xl text-[var(--foreground)]">{data.summary.avgSteps.toLocaleString()}</p>
           </div>
           <div className="card p-4">
-            <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">Active Days</p>
-            <p className="font-mono text-2xl text-[#f2f0e3]">{data.summary.activeDays}</p>
+            <p className="font-mono text-[10px] md:text-xs text-[#999999] uppercase tracking-wider mb-1">Active Days</p>
+            <p className="font-mono text-2xl text-[var(--foreground)]">{data.summary.activeDays}</p>
           </div>
         </div>
 
         {/* Strain Trend Chart */}
         <div className="card p-4">
-          <h2 className="font-mono text-sm text-[#f2f0e3]/60 uppercase tracking-wider mb-4">Strain Trend</h2>
+          <h2 className="font-mono text-sm text-[#999999] uppercase tracking-wider mb-4">Strain Trend</h2>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={strainChartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#6E81B7" strokeOpacity={0.2} />
               <XAxis 
                 dataKey="date" 
                 fontSize={10} 
-                stroke="#f2f0e3" 
-                strokeOpacity={0.4}
-                tick={{ fill: '#f2f0e3', fillOpacity: 0.4 }}
+                stroke="#999999" 
+                tick={{ fill: '#999999' }}
               />
               <YAxis 
                 domain={[0, 21]} 
                 fontSize={10}
-                stroke="#f2f0e3" 
-                strokeOpacity={0.4}
-                tick={{ fill: '#f2f0e3', fillOpacity: 0.4 }}
+                stroke="#999999" 
+                tick={{ fill: '#999999' }}
               />
               <Tooltip
                 contentStyle={{
@@ -198,7 +196,7 @@ export default function TrendsPage() {
                   borderRadius: '8px',
                   fontFamily: 'var(--font-mono)'
                 }}
-                labelStyle={{ color: '#f2f0e3' }}
+                labelStyle={{ color: 'var(--foreground)' }}
               />
               <Line 
                 type="monotone" 
@@ -216,7 +214,7 @@ export default function TrendsPage() {
           {/* Activity Types */}
           {activityTypeData.length > 0 && (
             <div className="card p-4">
-              <h2 className="font-mono text-sm text-[#f2f0e3]/60 uppercase tracking-wider mb-4">Activity Types</h2>
+              <h2 className="font-mono text-sm text-[#999999] uppercase tracking-wider mb-4">Activity Types</h2>
               <ResponsiveContainer width="100%" height={180}>
                 <PieChart>
                   <Pie
@@ -250,22 +248,20 @@ export default function TrendsPage() {
           {/* Readiness Distribution */}
           {readinessData.length > 0 && (
             <div className="card p-4">
-              <h2 className="font-mono text-sm text-[#f2f0e3]/60 uppercase tracking-wider mb-4">Readiness</h2>
+              <h2 className="font-mono text-sm text-[#999999] uppercase tracking-wider mb-4">Readiness</h2>
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart data={readinessData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#6E81B7" strokeOpacity={0.2} />
                   <XAxis 
                     dataKey="name" 
                     fontSize={10}
-                    stroke="#f2f0e3" 
-                    strokeOpacity={0.4}
-                    tick={{ fill: '#f2f0e3', fillOpacity: 0.4 }}
+                    stroke="#999999" 
+                    tick={{ fill: '#999999' }}
                   />
                   <YAxis 
                     fontSize={10}
-                    stroke="#f2f0e3" 
-                    strokeOpacity={0.4}
-                    tick={{ fill: '#f2f0e3', fillOpacity: 0.4 }}
+                    stroke="#999999" 
+                    tick={{ fill: '#999999' }}
                   />
                   <Tooltip
                     contentStyle={{
@@ -288,20 +284,20 @@ export default function TrendsPage() {
 
         {/* Personal Bests */}
         <div className="card p-4">
-          <h2 className="font-mono text-sm text-[#f2f0e3]/60 uppercase tracking-wider mb-4">
+          <h2 className="font-mono text-sm text-[#999999] uppercase tracking-wider mb-4">
             Personal Bests <span className="text-accent">({period}d)</span>
           </h2>
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 mb-1">Highest Strain</p>
+              <p className="font-mono text-[10px] md:text-xs text-[#999999] mb-1">Highest Strain</p>
               <p className="font-mono text-xl text-accent">{data.summary.maxStrain.toFixed(1)}</p>
             </div>
             <div>
-              <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 mb-1">Most Steps</p>
+              <p className="font-mono text-[10px] md:text-xs text-[#999999] mb-1">Most Steps</p>
               <p className="font-mono text-xl text-accent">{data.summary.maxSteps.toLocaleString()}</p>
             </div>
             <div>
-              <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 mb-1">Most Calories</p>
+              <p className="font-mono text-[10px] md:text-xs text-[#999999] mb-1">Most Calories</p>
               <p className="font-mono text-xl text-accent">{data.summary.maxCalories.toLocaleString()}</p>
             </div>
           </div>
@@ -309,12 +305,12 @@ export default function TrendsPage() {
 
         {/* Training Insights */}
         <div className="card p-4">
-          <h2 className="font-mono text-sm text-[#f2f0e3]/60 uppercase tracking-wider mb-4">Insights</h2>
+          <h2 className="font-mono text-sm text-[#999999] uppercase tracking-wider mb-4">Insights</h2>
           <div className="space-y-3">
             {data.summary.avgStrain > 12 && (
               <div className="border-l-2 border-amber-500 pl-3">
-                <p className="font-mono text-sm text-[#f2f0e3]">High Average Load</p>
-                <p className="text-xs text-[#f2f0e3]/60 mt-1">
+                <p className="font-mono text-sm text-[var(--foreground)]">High Average Load</p>
+                <p className="text-xs text-[#999999] mt-1">
                   Your average strain of {data.summary.avgStrain} is high. Consider incorporating more recovery days.
                 </p>
               </div>
@@ -322,8 +318,8 @@ export default function TrendsPage() {
 
             {data.summary.avgStrain < 6 && (
               <div className="border-l-2 border-accent pl-3">
-                <p className="font-mono text-sm text-[#f2f0e3]">Room to Increase Load</p>
-                <p className="text-xs text-[#f2f0e3]/60 mt-1">
+                <p className="font-mono text-sm text-[var(--foreground)]">Room to Increase Load</p>
+                <p className="text-xs text-[#999999] mt-1">
                   Your average strain is relatively low. You may have capacity for increased training volume.
                 </p>
               </div>
@@ -331,8 +327,8 @@ export default function TrendsPage() {
 
             {data.summary.readinessCount.red > data.summary.activeDays * 0.3 && (
               <div className="border-l-2 border-red-500 pl-3">
-                <p className="font-mono text-sm text-[#f2f0e3]">Frequent Low Readiness</p>
-                <p className="text-xs text-[#f2f0e3]/60 mt-1">
+                <p className="font-mono text-sm text-[var(--foreground)]">Frequent Low Readiness</p>
+                <p className="text-xs text-[#999999] mt-1">
                   You've had red readiness on {data.summary.readinessCount.red} days. Focus on recovery and sleep quality.
                 </p>
               </div>
@@ -340,8 +336,8 @@ export default function TrendsPage() {
 
             {data.summary.activeDays / period > 0.8 && (
               <div className="border-l-2 border-accent pl-3">
-                <p className="font-mono text-sm text-[#f2f0e3]">Great Consistency!</p>
-                <p className="text-xs text-[#f2f0e3]/60 mt-1">
+                <p className="font-mono text-sm text-[var(--foreground)]">Great Consistency!</p>
+                <p className="text-xs text-[#999999] mt-1">
                   You've been active on {data.summary.activeDays} out of {period} days. Keep up the momentum!
                 </p>
               </div>
@@ -351,8 +347,8 @@ export default function TrendsPage() {
              data.summary.readinessCount.red <= data.summary.activeDays * 0.3 &&
              data.summary.activeDays / period <= 0.8 && (
               <div className="border-l-2 border-[#6E81B7] pl-3">
-                <p className="font-mono text-sm text-[#f2f0e3]">Balanced Training</p>
-                <p className="text-xs text-[#f2f0e3]/60 mt-1">
+                <p className="font-mono text-sm text-[var(--foreground)]">Balanced Training</p>
+                <p className="text-xs text-[#999999] mt-1">
                   Your training load is well-balanced. Keep monitoring your readiness to optimize performance.
                 </p>
               </div>

@@ -4,7 +4,7 @@
 
 :root {
   --background: transparent;
-  --foreground: #f2f0e3;
+  --foreground: #C7C1B8;
   --accent-mint: #7fd8be;
   --card-bg-start: rgba(255, 255, 255, 0.05);
   --card-bg-end: rgba(255, 255, 255, 0.03);
@@ -38,6 +38,18 @@ body {
   /* Accent text color */
   .text-accent {
     color: var(--accent-mint);
+  }
+
+  /* AI insights list - numbers hang outside with accent color */
+  .ai-insights-list {
+    list-style-type: decimal;
+    list-style-position: outside;
+  }
+  
+  .ai-insights-list li::marker {
+    color: var(--accent-mint);
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
   }
 }
 

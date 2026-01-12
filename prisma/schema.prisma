@@ -66,6 +66,7 @@ model Workout {
   distance             Float?   // meters
   elevation            Float?   // meters
   averageHeartrate     Float?   // bpm
+  calories             Int?     // calories burned (from Strava kilojoules)
 
   // Raw data (for future use)
   rawData              String?  // JSON blob of full Strava activity

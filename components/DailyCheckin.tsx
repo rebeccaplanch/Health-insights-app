@@ -85,14 +85,14 @@ function NumberInput({
           disabled={disabled}
           className={`w-full font-mono font-medium text-xl bg-transparent border-none outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
             !disabled
-              ? 'text-[#f2f0e3] placeholder:text-[#f2f0e3]/30'
-              : 'text-[#f2f0e3]/60 cursor-not-allowed'
+              ? 'text-[var(--foreground)] placeholder:text-[#4d4d4d]'
+              : 'text-[#999999] cursor-not-allowed'
           }`}
           min={min}
           max={max}
         />
         {suffix && (
-          <span className="font-mono text-xs text-[#f2f0e3]/40">{suffix}</span>
+          <span className="font-mono text-xs text-[#999999]">{suffix}</span>
         )}
       </div>
       {!disabled && (
@@ -100,7 +100,7 @@ function NumberInput({
           <button
             type="button"
             onClick={increment}
-            className="text-[#f2f0e3]/40 hover:text-[#f2f0e3] transition-colors"
+            className="text-[#999999] hover:text-[var(--foreground)] transition-colors"
             tabIndex={-1}
           >
             <UpArrow />
@@ -108,7 +108,7 @@ function NumberInput({
           <button
             type="button"
             onClick={decrement}
-            className="text-[#f2f0e3]/40 hover:text-[#f2f0e3] transition-colors"
+            className="text-[#999999] hover:text-[var(--foreground)] transition-colors"
             tabIndex={-1}
           >
             <DownArrow />
@@ -203,15 +203,15 @@ export default function DailyCheckin() {
         <div>
           <h2 className="font-mono font-medium text-sm text-accent">Daily Check-in</h2>
           {date && (
-            <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60 mt-1">
-              Yesterday · {formatDateForDisplay(date)}
+            <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#999999] mt-1">
+              Yesterday; {formatDateForDisplay(date)}
             </p>
           )}
         </div>
         {!isEditing && hasData && (
           <button
             onClick={handleEdit}
-            className="p-2 text-[#f2f0e3]/60 hover:text-accent transition-colors rounded-lg"
+            className="p-2 text-[#999999] hover:text-accent transition-colors rounded-lg"
             title="Edit"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -230,7 +230,7 @@ export default function DailyCheckin() {
               ? 'bg-[#1a2542]'
               : 'bg-[#1a2542]/50'
           }`}>
-            <label htmlFor="steps" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60 mb-2">
+            <label htmlFor="steps" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#999999] mb-2">
               Steps
             </label>
             <NumberInput
@@ -248,7 +248,7 @@ export default function DailyCheckin() {
               ? 'bg-[#1a2542]'
               : 'bg-[#1a2542]/50'
           }`}>
-            <label htmlFor="calories" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60 mb-2">
+            <label htmlFor="calories" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#999999] mb-2">
               Calories
             </label>
             <NumberInput
@@ -266,7 +266,7 @@ export default function DailyCheckin() {
               ? 'bg-[#1a2542]'
               : 'bg-[#1a2542]/50'
           }`}>
-            <label htmlFor="sleepScore" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60 mb-2">
+            <label htmlFor="sleepScore" className="block font-mono text-[10px] md:text-xs tracking-wide-upper text-[#999999] mb-2">
               Sleep
             </label>
             <NumberInput

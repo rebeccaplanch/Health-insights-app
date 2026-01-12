@@ -101,13 +101,13 @@ export default function StravaConnect() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#1a2542] rounded-lg flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#6E81B7">
                 <path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/>
               </svg>
             </div>
             <div>
               <h3 className="font-mono font-medium text-sm text-accent">Connect Strava</h3>
-              <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60">
+              <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#999999]">
                 Sync your workouts automatically
               </p>
             </div>
@@ -126,10 +126,10 @@ export default function StravaConnect() {
 
   return (
     <div className="card px-3 py-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-[#1a2542] rounded-lg flex items-center justify-center flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#6E81B7">
               <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
             </svg>
           </div>
@@ -137,24 +137,24 @@ export default function StravaConnect() {
             <h3 className="font-mono font-medium text-sm text-accent">Strava Connected</h3>
             <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60 mt-1">
               {status.workoutCount} workouts synced
-              {status.lastSync && ` · ${new Date(status.lastSync).toLocaleDateString()}`}
+              {status.lastSync && `; ${new Date(status.lastSync).toLocaleDateString()}`}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pl-[52px] md:pl-0 md:justify-start">
+          <button
+            onClick={() => handleSync(90, true)}
+            disabled={syncingSync || syncingBackfill}
+            className="bg-transparent border-[1.5px] border-[#1a2542] hover:border-[#1e2a4a] hover:bg-[#1a2542]/10 disabled:border-[#1a2542]/50 disabled:bg-transparent disabled:text-accent/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all box-border"
+          >
+            {syncingBackfill ? '...' : 'Backfill'}
+          </button>
           <button
             onClick={() => handleSync(2, false)}
             disabled={syncingSync || syncingBackfill}
             className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
           >
             {syncingSync ? 'Syncing...' : 'Sync'}
-          </button>
-          <button
-            onClick={() => handleSync(90, true)}
-            disabled={syncingSync || syncingBackfill}
-            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
-          >
-            {syncingBackfill ? '...' : 'Backfill'}
           </button>
         </div>
       </div>

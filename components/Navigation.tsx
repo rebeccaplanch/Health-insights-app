@@ -55,7 +55,7 @@ export default function Navigation() {
               className={`flex flex-col items-center gap-1 px-3 py-1 rounded-lg transition-colors ${
                 isActive
                   ? 'text-accent'
-                  : 'text-[#f2f0e3]/60 hover:text-[#f2f0e3]'
+                  : 'text-[#999999] hover:text-[var(--foreground)]'
               }`}
             >
               <span className="text-lg flex items-center justify-center">{item.icon}</span>
@@ -79,8 +79,8 @@ export default function Navigation() {
                   href={item.href}
                   className={`py-4 px-2 border-b-2 font-mono text-sm transition-colors flex items-center gap-2 ${
                     isActive
-                      ? 'border-accent text-accent'
-                      : 'border-transparent text-[#f2f0e3]/60 hover:text-[#f2f0e3]'
+                      ? 'border-[#7fd8be] text-accent'
+                      : 'border-transparent text-[#999999] hover:text-[var(--foreground)]'
                   }`}
                 >
                   <span className="flex items-center">{item.icon}</span>

@@ -81,6 +81,11 @@ export async function POST(request: NextRequest) {
             update: {},
           });
 
+          // Convert kilojoules to calories (1 kJ = 0.239 kcal, or divide by 4.184)
+          const calories = activity.kilojoules 
+            ? Math.round(activity.kilojoules / 4.184) 
+            : null;
+
           // Create workout
           await prisma.workout.create({
             data: {
@@ -93,6 +98,7 @@ export async function POST(request: NextRequest) {
               distance: activity.distance,
               elevation: activity.total_elevation_gain,
               averageHeartrate: activity.average_heartrate || null,
+              calories: calories,
               rawData: JSON.stringify(activity),
               dailyEntryId: dailyEntry.id,
             },

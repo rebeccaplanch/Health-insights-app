@@ -18,7 +18,7 @@ export default function Home() {
           <p className="font-mono italic text-sm text-accent mb-1">
             Welcome back
           </p>
-          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[var(--foreground)]">
             REBECCA
           </h1>
         </div>
