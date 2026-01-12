@@ -34,7 +34,7 @@ const config: Config = {
         // Status colors
         status: {
           ready: '#7fd8be',
-          moderate: '#fbbf24',
+          moderate: '#f9f871',
           rest: '#ef4444',
         },
       },

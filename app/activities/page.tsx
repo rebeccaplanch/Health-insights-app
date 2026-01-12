@@ -105,13 +105,13 @@ export default function ActivitiesPage() {
             <p className="font-mono italic text-sm text-accent mb-1">
               Your workouts
             </p>
-            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1]">
+            <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
               ACTIVITIES
             </h1>
           </div>
 
           <div className="card p-8 text-center">
-            <p className="text-[#f1f1f1]/60 font-mono">Loading activities...</p>
+            <p className="text-[#f2f0e3]/60 font-mono">Loading activities...</p>
           </div>
         </div>
 
@@ -135,21 +135,21 @@ export default function ActivitiesPage() {
           <p className="font-mono italic text-sm text-accent mb-1">
             Your workouts
           </p>
-          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1]">
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
             ACTIVITIES
           </h1>
         </div>
 
         {/* Subtitle */}
-        <p className="text-[#f1f1f1]/60 text-sm">
+        <p className="text-[#f2f0e3]/60 text-sm">
           Edit workout types and add notes to improve your insights
         </p>
 
         {/* Workouts List */}
         {workouts.length === 0 ? (
           <div className="card p-8 text-center">
-            <p className="text-[#f1f1f1]/60 font-mono mb-2">No activities yet</p>
-            <p className="text-[#f1f1f1]/40 text-sm">
+            <p className="text-[#f2f0e3]/60 font-mono mb-2">No activities yet</p>
+            <p className="text-[#f2f0e3]/40 text-sm">
               Connect Strava to sync your workouts
             </p>
           </div>
@@ -168,7 +168,7 @@ export default function ActivitiesPage() {
                       <div className="flex justify-between items-start mb-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="font-mono text-lg text-[#f1f1f1]">
+                            <span className="font-mono text-lg text-[#f2f0e3]">
                               {displayType}
                             </span>
                             {workout.customType && (
@@ -177,7 +177,7 @@ export default function ActivitiesPage() {
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-[#f1f1f1]/40 font-mono">
+                          <p className="text-xs text-[#f2f0e3]/40 font-mono">
                             {new Date(workout.startDateLocal).toLocaleString('en-US', {
                               weekday: 'short',
                               month: 'short',
@@ -189,7 +189,7 @@ export default function ActivitiesPage() {
                         </div>
                         <button
                           onClick={() => handleEdit(workout)}
-                          className="p-2 text-[#f1f1f1]/40 hover:text-accent transition-colors rounded-lg"
+                          className="p-2 text-[#f2f0e3]/40 hover:text-accent transition-colors rounded-lg"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -211,20 +211,20 @@ export default function ActivitiesPage() {
                       {/* Stats Grid */}
                       <div className="grid grid-cols-3 gap-2 mb-3">
                         <div className="bg-[#1a2542] rounded-lg p-3">
-                          <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
+                          <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">
                             Duration
                           </p>
-                          <p className="font-mono text-lg text-[#f1f1f1]">
+                          <p className="font-mono text-lg text-[#f2f0e3]">
                             {durationMins}m
                           </p>
                         </div>
 
                         {workout.distance && (
                           <div className="bg-[#1a2542] rounded-lg p-3">
-                            <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
+                            <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">
                               Distance
                             </p>
-                            <p className="font-mono text-lg text-[#f1f1f1]">
+                            <p className="font-mono text-lg text-[#f2f0e3]">
                               {(workout.distance / 1000).toFixed(1)}km
                             </p>
                           </div>
@@ -232,10 +232,10 @@ export default function ActivitiesPage() {
 
                         {workout.averageHeartrate && (
                           <div className="bg-[#1a2542] rounded-lg p-3">
-                            <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
+                            <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">
                               Avg HR
                             </p>
-                            <p className="font-mono text-lg text-[#f1f1f1]">
+                            <p className="font-mono text-lg text-[#f2f0e3]">
                               {Math.round(workout.averageHeartrate)}
                             </p>
                           </div>
@@ -245,10 +245,10 @@ export default function ActivitiesPage() {
                       {/* Notes */}
                       {workout.description && (
                         <div className="bg-[#1a2542] rounded-lg p-3">
-                          <p className="font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-1">
+                          <p className="font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-1">
                             Notes
                           </p>
-                          <p className="text-sm text-[#f1f1f1]/80">
+                          <p className="text-sm text-[#f2f0e3]/80">
                             {workout.description}
                           </p>
                         </div>
@@ -258,7 +258,7 @@ export default function ActivitiesPage() {
                     /* Edit Mode */
                     <div className="space-y-4">
                       <div>
-                        <label className="block font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-2">
+                        <label className="block font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-2">
                           Workout Type
                         </label>
                         <select
@@ -266,7 +266,7 @@ export default function ActivitiesPage() {
                           onChange={(e) =>
                             setEditForm({ ...editForm, customType: e.target.value })
                           }
-                          className="w-full px-4 py-3 bg-[#1a2542] border border-[#6E81B7]/30 rounded-lg text-[#f1f1f1] font-mono focus:outline-none focus:border-accent"
+                          className="w-full px-4 py-3 bg-[#1a2542] border border-[#6E81B7]/30 rounded-lg text-[#f2f0e3] font-mono focus:outline-none focus:border-accent"
                         >
                           {WORKOUT_TYPES.map((type) => (
                             <option key={type} value={type}>
@@ -277,7 +277,7 @@ export default function ActivitiesPage() {
                       </div>
 
                       <div>
-                        <label className="block font-mono text-[10px] md:text-xs text-[#f1f1f1]/40 uppercase tracking-wider mb-2">
+                        <label className="block font-mono text-[10px] md:text-xs text-[#f2f0e3]/40 uppercase tracking-wider mb-2">
                           Notes
                         </label>
                         <textarea
@@ -286,7 +286,7 @@ export default function ActivitiesPage() {
                             setEditForm({ ...editForm, description: e.target.value })
                           }
                           placeholder="Add notes about this workout..."
-                          className="w-full px-4 py-3 bg-[#1a2542] border border-[#6E81B7]/30 rounded-lg text-[#f1f1f1] font-mono focus:outline-none focus:border-accent resize-none placeholder:text-[#f1f1f1]/30"
+                          className="w-full px-4 py-3 bg-[#1a2542] border border-[#6E81B7]/30 rounded-lg text-[#f2f0e3] font-mono focus:outline-none focus:border-accent resize-none placeholder:text-[#f2f0e3]/30"
                           rows={3}
                         />
                       </div>
@@ -295,14 +295,14 @@ export default function ActivitiesPage() {
                         <button
                           onClick={handleCancel}
                           disabled={saving}
-                          className="px-4 py-2 bg-[#f1f1f1]/10 hover:bg-[#f1f1f1]/15 text-[#f1f1f1] font-mono text-sm rounded-lg transition-all"
+                          className="px-4 py-2 bg-[#f2f0e3]/10 hover:bg-[#f2f0e3]/15 text-[#f2f0e3] font-mono text-sm rounded-lg transition-all"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={() => handleSave(workout.id)}
                           disabled={saving}
-                          className="px-4 py-2 bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#f1f1f1]/20 text-accent font-mono text-sm rounded-lg transition-all"
+                          className="px-4 py-2 bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#f2f0e3]/20 text-accent font-mono text-sm rounded-lg transition-all"
                         >
                           {saving ? 'Saving...' : 'Save'}
                         </button>

@@ -59,7 +59,7 @@ export default function AIDataPage() {
           <p className="font-mono italic text-sm text-accent mb-1">
             AI Analysis
           </p>
-          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f1f1f1]">
+          <h1 className="font-mono font-medium text-[48px] leading-none tracking-display text-[#f2f0e3]">
             INSIGHTS
           </h1>
         </div>
@@ -73,10 +73,10 @@ export default function AIDataPage() {
               </svg>
             </div>
             <div>
-              <h3 className="font-mono text-sm text-[#f1f1f1] mb-2">
+              <h3 className="font-mono text-sm text-[#f2f0e3] mb-2">
                 How to get AI insights
               </h3>
-              <ol className="text-xs text-[#f1f1f1]/60 space-y-1.5">
+              <ol className="text-xs text-[#f2f0e3]/60 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-accent font-mono">1.</span>
                   <span>Click "Copy Data" below</span>
@@ -106,7 +106,7 @@ export default function AIDataPage() {
             className={`flex-1 py-3 px-4 rounded-lg font-mono text-sm transition-all ${
               copied
                 ? 'bg-accent text-[#12192f]'
-                : 'bg-[#1a2542] hover:bg-[#1e2a4a] text-accent disabled:text-[#f1f1f1]/30 disabled:bg-[#f1f1f1]/10'
+                : 'bg-[#1a2542] hover:bg-[#1e2a4a] text-accent disabled:text-[#f2f0e3]/30 disabled:bg-[#f2f0e3]/10'
             }`}
           >
             {copied ? '✓ Copied!' : 'Copy Data'}
@@ -114,7 +114,7 @@ export default function AIDataPage() {
           <button
             onClick={fetchData}
             disabled={loading}
-            className="py-3 px-4 bg-[#f1f1f1]/10 hover:bg-[#f1f1f1]/15 disabled:bg-[#f1f1f1]/5 text-[#f1f1f1] font-mono text-sm rounded-lg transition-all"
+            className="py-3 px-4 bg-[#f2f0e3]/10 hover:bg-[#f2f0e3]/15 disabled:bg-[#f2f0e3]/5 text-[#f2f0e3] font-mono text-sm rounded-lg transition-all"
           >
             <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor" className={loading ? 'animate-spin' : ''}>
               <path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/>
@@ -126,7 +126,7 @@ export default function AIDataPage() {
         <div className="card p-4">
           {loading && (
             <div className="text-center py-8">
-              <p className="text-[#f1f1f1]/60 font-mono">Loading data...</p>
+              <p className="text-[#f2f0e3]/60 font-mono">Loading data...</p>
             </div>
           )}
 
@@ -138,7 +138,7 @@ export default function AIDataPage() {
 
           {!loading && !error && data && (
             <div className="bg-[#1a2542] rounded-lg p-4 overflow-auto max-h-[400px]">
-              <pre className="text-xs font-mono text-[#f1f1f1]/80 whitespace-pre-wrap">
+              <pre className="text-xs font-mono text-[#f2f0e3]/80 whitespace-pre-wrap">
                 {data}
               </pre>
             </div>
@@ -146,8 +146,8 @@ export default function AIDataPage() {
 
           {!loading && !error && !data && (
             <div className="text-center py-8">
-              <p className="text-[#f1f1f1]/60 font-mono mb-2">No data available</p>
-              <p className="text-[#f1f1f1]/40 text-sm">
+              <p className="text-[#f2f0e3]/60 font-mono mb-2">No data available</p>
+              <p className="text-[#f2f0e3]/40 text-sm">
                 Start logging your daily check-ins!
               </p>
             </div>

@@ -345,8 +345,8 @@ export default function BackgroundGrid() {
           className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,1) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,1) 1px, transparent 1px)
+              linear-gradient(to right, rgba(242,240,227,1) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(242,240,227,1) 1px, transparent 1px)
             `,
             backgroundSize: `${GRID_SIZE}px ${GRID_SIZE}px`,
           }}

@@ -4,12 +4,12 @@
 
 :root {
   --background: transparent;
-  --foreground: #f1f1f1;
+  --foreground: #f2f0e3;
   --accent-mint: #7fd8be;
   --card-bg-start: rgba(255, 255, 255, 0.05);
   --card-bg-end: rgba(255, 255, 255, 0.03);
   --card-bg-0: #12192f;
-  --status-bg: #12192f;
+  --status-bg: #0a0d15;
 }
 
 body {

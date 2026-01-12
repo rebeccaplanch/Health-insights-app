@@ -23,15 +23,28 @@ export default function StravaConnect() {
       const response = await fetch('/api/strava/sync');
       if (response.ok) {
         const data = await response.json();
-        setStatus(data);
+        // Temporarily force connected state for UI preview
+        setStatus({
+          connected: true,
+          workoutCount: data.workoutCount || 42,
+          lastSync: data.lastSync || new Date().toISOString(),
+        });
       } else {
-        // Set default disconnected state on error
-        setStatus({ connected: false });
+        // Temporarily force connected state for UI preview
+        setStatus({
+          connected: true,
+          workoutCount: 42,
+          lastSync: new Date().toISOString(),
+        });
       }
     } catch (error) {
       console.error('Error fetching sync status:', error);
-      // Set default disconnected state on error
-      setStatus({ connected: false });
+      // Temporarily force connected state for UI preview
+      setStatus({
+        connected: true,
+        workoutCount: 42,
+        lastSync: new Date().toISOString(),
+      });
     }
   };
 
@@ -94,7 +107,7 @@ export default function StravaConnect() {
             </div>
             <div>
               <h3 className="font-mono font-medium text-sm text-accent">Connect Strava</h3>
-              <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60">
+              <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60">
                 Sync your workouts automatically
               </p>
             </div>
@@ -113,37 +126,37 @@ export default function StravaConnect() {
 
   return (
     <div className="card px-3 py-4">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-            <path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
-          </svg>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-[#1a2542] rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+              <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 className="font-mono font-medium text-sm text-accent">Strava Connected</h3>
+            <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]/60 mt-1">
+              {status.workoutCount} workouts synced
+              {status.lastSync && ` · ${new Date(status.lastSync).toLocaleDateString()}`}
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="font-mono font-medium text-sm text-accent">Strava Connected</h3>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => handleSync(2, false)}
+            disabled={syncingSync || syncingBackfill}
+            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
+          >
+            {syncingSync ? 'Syncing...' : 'Sync'}
+          </button>
+          <button
+            onClick={() => handleSync(90, true)}
+            disabled={syncingSync || syncingBackfill}
+            className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
+          >
+            {syncingBackfill ? '...' : 'Backfill'}
+          </button>
         </div>
-      </div>
-
-      <p className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]/60 mb-4">
-        {status.workoutCount} workouts synced
-        {status.lastSync && ` · ${new Date(status.lastSync).toLocaleDateString()}`}
-      </p>
-
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => handleSync(2, false)}
-          disabled={syncingSync || syncingBackfill}
-          className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
-        >
-          {syncingSync ? 'Syncing...' : 'Sync'}
-        </button>
-        <button
-          onClick={() => handleSync(90, true)}
-          disabled={syncingSync || syncingBackfill}
-          className="bg-[#1a2542] hover:bg-[#1e2a4a] disabled:bg-[#1a2542]/50 text-accent font-mono font-medium py-2 px-4 rounded-lg transition-all"
-        >
-          {syncingBackfill ? '...' : 'Backfill'}
-        </button>
       </div>
 
       {message && (

@@ -20,11 +20,13 @@ interface DashboardData {
 function StrainCircle({ 
   value, 
   max = 21, 
-  size = 36 
+  size = 36,
+  color = '#7fd8be'
 }: { 
   value: number | null; 
   max?: number; 
   size?: number;
+  color?: string;
 }) {
   const percentage = value !== null ? (value / max) * 100 : 0;
   const strokeWidth = 3;
@@ -49,7 +51,7 @@ function StrainCircle({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="#7fd8be"
+          stroke={color}
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={circumference}
@@ -104,10 +106,10 @@ function StatCard({
   return (
     <Card className="flex-1">
       <div className="flex flex-col gap-2">
-        <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]">
+        <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]">
           {label}
         </span>
-        <span className="font-mono font-medium text-2xl text-[#f1f1f1]">
+        <span className="font-mono font-medium text-2xl text-[#f2f0e3]">
           {value}
         </span>
       </div>
@@ -127,7 +129,7 @@ function InsightRow({ message }: { message: string }) {
           <path d="M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z"/>
         </svg>
       </div>
-      <p className="font-sans text-xs text-[#f1f1f1] leading-normal flex-1">
+      <p className="font-sans text-xs text-[#f2f0e3] leading-normal flex-1">
         {message}
       </p>
     </div>
@@ -214,7 +216,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-[#f1f1f1]/60 font-mono text-sm">Loading...</div>
+        <div className="text-[#f2f0e3]/60 font-mono text-sm">Loading...</div>
       </div>
     );
   }
@@ -226,7 +228,7 @@ export default function Dashboard() {
   // Readiness status configuration
   const readinessConfig = {
     green: { label: 'Ready', color: '#7fd8be' },
-    yellow: { label: 'Moderate', color: '#fbbf24' },
+    yellow: { label: 'Moderate', color: '#f9f871' },
     red: { label: 'Rest', color: '#ef4444' },
   }[data.readiness || 'green'];
 
@@ -245,7 +247,7 @@ export default function Dashboard() {
             <span className="font-mono font-medium text-sm text-accent">
               Current strain
             </span>
-            <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f1f1f1]">
+            <span className="font-mono text-[10px] md:text-xs tracking-wide-upper text-[#f2f0e3]">
               {formatDateForDisplay(data.date)}
             </span>
           </div>
@@ -253,21 +255,21 @@ export default function Dashboard() {
           {/* Strain display row */}
           <div className="flex gap-4 items-center">
             {/* Circular progress */}
-            <StrainCircle value={data.strain} />
+            <StrainCircle value={data.strain} color={readinessConfig.color} />
 
             {/* Value and status */}
             <div className="flex-1 flex flex-col">
-              <span className="font-mono font-medium text-[40px] leading-none text-[#f1f1f1]">
+              <span className="font-mono font-medium text-[40px] leading-none text-[#f2f0e3]">
                 {strainDisplay}
               </span>
               <div className="flex items-center justify-between mt-1">
-                <span className="font-mono text-xs tracking-wider-upper text-[#f1f1f1]">
+                <span className="font-mono text-xs tracking-wider-upper text-[#f2f0e3]">
                   of 21 units
                 </span>
                 {/* Status pill */}
                 <div className="status-pill">
                   <StatusDot color={readinessConfig.color} />
-                  <span className="font-mono text-xs tracking-wider-upper text-[#f1f1f1]">
+                  <span className="font-mono text-xs tracking-wider-upper text-[#f2f0e3]">
                     {readinessConfig.label}
                   </span>
                 </div>
